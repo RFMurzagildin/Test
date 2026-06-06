@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тестирование ПО — Вопросы с ответами</title>
+<style>
+  :root {
+    --bg: #f5f6f8;
+    --card: #ffffff;
+    --accent: #2563eb;
+    --accent-soft: #dbeafe;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --mark: #fde68a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 20px 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  h1 {
+    margin: 0 0 12px;
+    font-size: 19px;
+  }
+  .search-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  #search {
+    flex: 1;
+    min-width: 220px;
+    padding: 11px 14px;
+    font-size: 16px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    outline: none;
+    transition: border-color .15s;
+  }
+  #search:focus { border-color: var(--accent); }
+  #count {
+    font-size: 13px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 8px; }
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 18px 16px 60px;
+  }
+  details {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: box-shadow .15s;
+  }
+  details[open] { box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+  summary {
+    cursor: pointer;
+    padding: 14px 16px;
+    font-weight: 600;
+    font-size: 15px;
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  summary::-webkit-details-marker { display: none; }
+  .num {
+    flex: 0 0 auto;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: 7px;
+    min-width: 28px;
+    text-align: center;
+    padding: 2px 7px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .answer {
+    padding: 4px 18px 18px;
+    border-top: 1px solid var(--border);
+    color: var(--text);
+  }
+  .answer p { margin: 10px 0; }
+  .answer ul { margin: 8px 0; padding-left: 22px; }
+  .answer li { margin: 3px 0; }
+  .answer strong { color: #111827; }
+  mark { background: var(--mark); border-radius: 3px; padding: 0 2px; }
+  .no-results {
+    text-align: center;
+    color: var(--muted);
+    padding: 40px 0;
+    display: none;
+  }
+  .toolbar { display: flex; gap: 8px; margin-top: 10px; }
+  .toolbar button {
+    border: 1px solid var(--border);
+    background: var(--card);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--text);
+  }
+  .toolbar button:hover { background: var(--accent-soft); border-color: var(--accent); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Тестирование ПО — Вопросы с ответами</h1>
+  <div class="search-row">
+    <input id="search" type="text" placeholder="Поиск по вопросам и ответам… (например: severity, XSS, usability)" autocomplete="off" autofocus>
+    <span id="count"></span>
+  </div>
+  <div class="toolbar">
+    <button onclick="setAll(true)">Развернуть всё</button>
+    <button onclick="setAll(false)">Свернуть всё</button>
+  </div>
+  <div class="hint">Печатайте ключевые слова — список фильтруется мгновенно, совпадения подсвечиваются.</div>
+</header>
+
+<main>
+  <div id="list">
+
+    <details>
+      <summary><span class="num">1</span><span>Что такое баг? Что такое тест-кейс? Атрибуты и части тест-кейса. Источники ожидаемого результата</span></summary>
+      <div class="answer">
+        <p><strong>Баг</strong> — ошибка, дефект или неисправность в программе, которая приводит к неправильной работе системы или её компонентов.</p>
+        <p><strong>Тест-кейс</strong> — набор условий, шагов и данных, которые определяют, как проверить конкретную функцию или характеристику системы.</p>
+        <p><strong>Атрибуты тест-кейса:</strong></p>
+        <ul>
+          <li>Идентификатор тест-кейса (ID)</li>
+          <li>Название</li>
+          <li>Описание</li>
+          <li>Предусловия</li>
+          <li>Шаги выполнения</li>
+          <li>Ожидаемый результат</li>
+          <li>Фактический результат</li>
+          <li>Статус (пройден/не пройден)</li>
+          <li>Приоритет</li>
+          <li>Автор</li>
+        </ul>
+        <p><strong>Источники ожидаемого результата:</strong></p>
+        <ul>
+          <li>Требования документации</li>
+          <li>Технические спецификации</li>
+          <li>Дизайн-документы</li>
+          <li>Примеры использования (use cases)</li>
+          <li>Предыдущие версии продукта</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">2</span><span>Что такое тестирование? Цели тестирования. Разница между валидацией и верификацией? Что такое качество? Управление качеством?</span></summary>
+      <div class="answer">
+        <p><strong>Тестирование</strong> — процесс оценки системы или её компонентов с целью нахождения различий между существующими и требуемыми условиями и оценки характеристик системы.</p>
+        <p><strong>Цели тестирования:</strong></p>
+        <ul>
+          <li>Обнаружение дефектов</li>
+          <li>Оценка качества продукта</li>
+          <li>Проверка соответствия требованиям</li>
+          <li>Повышение уверенности в работе системы</li>
+        </ul>
+        <p><strong>Валидация</strong> — проверка того, что продукт соответствует ожиданиям и требованиям пользователя (делаем правильный продукт).</p>
+        <p><strong>Верификация</strong> — проверка того, что продукт разработан в соответствии с техническими требованиями (делаем продукт правильно).</p>
+        <p><strong>Качество</strong> — степень, до которой система или компонент удовлетворяет заявленные и предполагаемые потребности.</p>
+        <p><strong>Управление качеством</strong> — координированная деятельность по направлению и контролю качества организации.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">3</span><span>Типичные проблемы требований</span></summary>
+      <div class="answer">
+        <ul>
+          <li>Неясность и двусмысленность</li>
+          <li>Противоречивость</li>
+          <li>Неполнота</li>
+          <li>Нереалистичность</li>
+          <li>Избыточность</li>
+          <li>Изменчивость требований</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">4</span><span>Методы и средства проверки требований</span></summary>
+      <div class="answer">
+        <p><strong>Методы:</strong></p>
+        <ul>
+          <li>Обзор требований</li>
+          <li>Анализ на соответствие и полноту</li>
+          <li>Прототипирование</li>
+          <li>Моделирование</li>
+        </ul>
+        <p><strong>Средства:</strong></p>
+        <ul>
+          <li>CASE-инструменты (Computer-Aided Software Engineering)</li>
+          <li>Системы управления требованиями (например, IBM Rational DOORS)</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">5</span><span>Фазы тестирования</span></summary>
+      <div class="answer">
+        <ul>
+          <li>Анализ требований</li>
+          <li>Планирование тестирования</li>
+          <li>Разработка тест-кейсов</li>
+          <li>Подготовка тестовой среды</li>
+          <li>Выполнение тестов</li>
+          <li>Анализ результатов тестирования</li>
+          <li>Закрытие тестирования</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">6</span><span>Какие действия включает в себя тестовый цикл?</span></summary>
+      <div class="answer">
+        <ul>
+          <li>Определение целей тестирования</li>
+          <li>Планирование и подготовка тестов</li>
+          <li>Разработка тест-кейсов и сценариев</li>
+          <li>Настройка тестовой среды</li>
+          <li>Выполнение тестов</li>
+          <li>Отчетность и анализ результатов</li>
+          <li>Корректирующие действия</li>
+          <li>Закрытие тестового цикла</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">7</span><span>Тестовые метрики</span></summary>
+      <div class="answer">
+        <ul>
+          <li>Количество найденных дефектов</li>
+          <li>Процент пройденных тестов</li>
+          <li>Количество выполненных тест-кейсов</li>
+          <li>Среднее время на исправление дефекта</li>
+          <li>Процент повторно открытых дефектов</li>
+          <li>Уровень покрытия кода тестами</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">8</span><span>Виды тестирования скорости и надежности</span></summary>
+      <div class="answer">
+        <p><strong>Скорость:</strong></p>
+        <ul>
+          <li>Тестирование производительности</li>
+          <li>Нагрузочное тестирование</li>
+          <li>Стресс-тестирование</li>
+        </ul>
+        <p><strong>Надежность:</strong></p>
+        <ul>
+          <li>Тестирование стабильности</li>
+          <li>Тестирование отказоустойчивости</li>
+          <li>Тестирование восстановления</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">9</span><span>Виды нефункционального тестирования</span></summary>
+      <div class="answer">
+        <ul>
+          <li>Тестирование безопасности</li>
+          <li>Тестирование юзабилити</li>
+          <li>Тестирование совместимости</li>
+          <li>Тестирование локализации</li>
+          <li>Тестирование доступности</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">10</span><span>Виды тестирования по времени проведения</span></summary>
+      <div class="answer">
+        <ul>
+          <li>Модульное тестирование</li>
+          <li>Интеграционное тестирование</li>
+          <li>Системное тестирование</li>
+          <li>Приемочное тестирование</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">11</span><span>В чем отличие тестирования белого и черного ящика?</span></summary>
+      <div class="answer">
+        <p><strong>Тестирование белого ящика</strong> — метод тестирования, где внутренние структуры или работа приложения известны тестировщику.</p>
+        <p><strong>Тестирование черного ящика</strong> — метод тестирования, при котором тестировщик не знает внутренней структуры системы и тестирует только функциональные аспекты.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">12</span><span>Где производится альфа-тестирование, а где бета?</span></summary>
+      <div class="answer">
+        <p><strong>Альфа-тестирование</strong> — проводится внутри организации разработчика.</p>
+        <p><strong>Бета-тестирование</strong> — проводится вне организации, обычно конечными пользователями или выбранной группой.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">13</span><span>Виды тестирования по степени изолированности компонент. Подходы в интеграционном тестировании</span></summary>
+      <div class="answer">
+        <p><strong>Изолированность:</strong></p>
+        <ul>
+          <li>Модульное тестирование</li>
+          <li>Интеграционное тестирование</li>
+          <li>Системное тестирование</li>
+        </ul>
+        <p><strong>Подходы в интеграционном тестировании:</strong></p>
+        <ul>
+          <li>Нисходящее тестирование</li>
+          <li>Восходящее тестирование</li>
+          <li>Большой взрыв</li>
+          <li>Инкрементальное тестирование</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">14</span><span>Каких тестов больше: позитивных или негативных? Почему? Что такое чек-лист и почему он используется?</span></summary>
+      <div class="answer">
+        <p><strong>Позитивных тестов больше</strong>, так как они проверяют, что система работает в соответствии с требованиями в нормальных условиях.</p>
+        <p><strong>Чек-лист</strong> — список проверок или критериев, которые должны быть выполнены или проверены. Используется для обеспечения полноты и систематичности тестирования.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">15</span><span>Обязательные атрибуты дефекта</span></summary>
+      <div class="answer">
+        <ul>
+          <li>Идентификатор (ID)</li>
+          <li>Заголовок</li>
+          <li>Описание</li>
+          <li>Шаги воспроизведения</li>
+          <li>Ожидаемый результат</li>
+          <li>Фактический результат</li>
+          <li>Приоритет</li>
+          <li>Степень серьезности (Severity)</li>
+          <li>Статус</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">16</span><span>Отличие между priority и severity</span></summary>
+      <div class="answer">
+        <p><strong>Priority (приоритет)</strong> — указывает на срочность исправления дефекта.</p>
+        <p><strong>Severity (серьезность)</strong> — указывает на степень влияния дефекта на работу системы.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">17</span><span>Какие есть необязательные атрибуты дефекта?</span></summary>
+      <div class="answer">
+        <ul>
+          <li>Компонент/Модуль</li>
+          <li>Версия</li>
+          <li>Окружение</li>
+          <li>Скриншоты/видео</li>
+          <li>Ассоциированные дефекты</li>
+          <li>Дополнительные комментарии</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">18</span><span>Жизненный цикл дефекта</span></summary>
+      <div class="answer">
+        <ul>
+          <li>Новый (New)</li>
+          <li>На рассмотрении (Assigned)</li>
+          <li>Открыт (Open)</li>
+          <li>Исправлен (Fixed)</li>
+          <li>Перетестирование (Retest)</li>
+          <li>Закрыт (Closed)</li>
+          <li>Отклонен (Rejected)</li>
+          <li>Повторный (Reopened)</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">19</span><span>Классификация web-сайтов</span></summary>
+      <div class="answer">
+        <ul>
+          <li>Статические сайты</li>
+          <li>Динамические сайты</li>
+          <li>E-commerce сайты</li>
+          <li>Социальные сети</li>
+          <li>Порталы</li>
+          <li>Блоги</li>
+          <li>Корпоративные сайты</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">20</span><span>Что такое кроссбраузерное тестирование? Как расставить приоритеты для сред? Какие тесты выбирать в первую очередь?</span></summary>
+      <div class="answer">
+        <p><strong>Кроссбраузерное тестирование</strong> — проверка веб-приложения в разных браузерах и их версиях для обеспечения корректной работы.</p>
+        <p><strong>Приоритеты для сред:</strong></p>
+        <ul>
+          <li>Браузеры с наибольшей долей рынка</li>
+          <li>Целевые браузеры клиента</li>
+          <li>Разные версии операционных систем</li>
+        </ul>
+        <p><strong>Тесты для кроссбраузерного тестирования:</strong></p>
+        <ul>
+          <li>Функциональные тесты</li>
+          <li>Тесты юзабилити</li>
+          <li>Тесты производительности</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">21</span><span>Тестирование безопасности. XSS и SQL-инъекция</span></summary>
+      <div class="answer">
+        <p><strong>XSS (Cross-Site Scripting)</strong> — уязвимость, позволяющая злоумышленнику внедрять вредоносные скрипты в веб-страницы. Пример: ввод скриптов в формы ввода данных, которые затем исполняются в браузере пользователя.</p>
+        <p><strong>SQL-инъекция</strong> — уязвимость, позволяющая злоумышленнику изменять запросы к базе данных. Пример: ввод SQL-кода в поля ввода, что позволяет выполнять несанкционированные команды на сервере.</p>
+        <p><strong>Как избежать:</strong></p>
+        <ul>
+          <li>Использовать экранирование данных</li>
+          <li>Применять подготовленные запросы (prepared statements)</li>
+          <li>Использовать библиотеки для защиты от XSS и SQL-инъекций</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">22</span><span>Тестирование безопасности. Таймаут сессии. Недостаточная аутентификация</span></summary>
+      <div class="answer">
+        <p><strong>Таймаут сессии</strong> — ограничение времени активности сессии для предотвращения несанкционированного доступа. Пример: завершение сессии пользователя после 15 минут неактивности.</p>
+        <p><strong>Недостаточная аутентификация</strong> — уязвимость, когда система не обеспечивает достаточную проверку личности пользователя. Пример: использование слабых паролей, отсутствие двухфакторной аутентификации.</p>
+        <p><strong>Как избежать:</strong></p>
+        <ul>
+          <li>Внедрение таймаутов сессии</li>
+          <li>Использование сильных паролей и многофакторной аутентификации</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">23</span><span>Тестирование безопасности. Восстановление паролей</span></summary>
+      <div class="answer">
+        <p><strong>Восстановление паролей</strong> — процесс, позволяющий пользователям восстановить доступ к своим учетным записям. Пример: отправка письма со ссылкой на сброс пароля на зарегистрированный email.</p>
+        <p><strong>Как избежать уязвимостей:</strong></p>
+        <ul>
+          <li>Использовать уникальные и одноразовые ссылки для сброса пароля</li>
+          <li>Ограничить количество попыток восстановления</li>
+          <li>Подтверждение личности перед восстановлением</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">24</span><span>Тестирование безопасности. Противодействие автоматизации</span></summary>
+      <div class="answer">
+        <p><strong>Противодействие автоматизации</strong> — меры по защите от автоматических атак. Пример: использование CAPTCHA для предотвращения автоматической регистрации или входа.</p>
+        <p><strong>Как избежать:</strong></p>
+        <ul>
+          <li>Внедрение CAPTCHA</li>
+          <li>Ограничение частоты запросов</li>
+          <li>Использование механизмов защиты от ботов</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">25</span><span>Отличия тестирования desktop и web приложений</span></summary>
+      <div class="answer">
+        <ul>
+          <li>Среда выполнения (операционные системы vs браузеры)</li>
+          <li>Обновление (ручное vs автоматическое)</li>
+          <li>Совместимость (железо vs браузеры и устройства)</li>
+          <li>Интерфейс (разрешение экрана vs адаптивный дизайн)</li>
+          <li>Безопасность (локальные данные vs передача данных по сети)</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">26</span><span>Что нужно учитывать при тестировании мобильных приложений?</span></summary>
+      <div class="answer">
+        <ul>
+          <li>Различие платформ (iOS, Android)</li>
+          <li>Разрешение экранов и форм-факторы</li>
+          <li>Условия сети (онлайн/офлайн)</li>
+          <li>Управление ресурсами (батарея, память)</li>
+          <li>Сенсорное управление (жесты)</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">27</span><span>Суть техники анализа классов эквивалентности? Суть техники анализа граничных значений?</span></summary>
+      <div class="answer">
+        <p><strong>Анализ классов эквивалентности</strong> — метод тестирования, при котором входные данные делятся на эквивалентные классы, предполагая, что система будет обрабатывать все значения внутри класса одинаково.</p>
+        <p><strong>Анализ граничных значений</strong> — метод тестирования, при котором тестируются значения на границах эквивалентных классов, где чаще всего возникают ошибки.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">28</span><span>Вы выделили классы эквивалентности и нашли границы. Какие значения вы возьмете для тестирования?</span></summary>
+      <div class="answer">
+        <p>Для тестирования выбираются:</p>
+        <ul>
+          <li>Минимальные и максимальные значения внутри каждого класса</li>
+          <li>Значения на границах классов</li>
+          <li>Значения сразу за границами</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">29</span><span>Что такое тестирование состояний переходов? Пример</span></summary>
+      <div class="answer">
+        <p><strong>Тестирование состояний переходов</strong> — метод тестирования, при котором проверяются переходы между состояниями системы.</p>
+        <p>Пример: тестирование автомата для продажи билетов, проверка корректности перехода между состояниями «ожидание», «ввод денег», «выбор билета», «выдача билета».</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">30</span><span>Методы тестирования белого ящика</span></summary>
+      <div class="answer">
+        <ul>
+          <li>Тестирование условий и ветвей</li>
+          <li>Тестирование путей</li>
+          <li>Тестирование циклов</li>
+          <li>Модульное тестирование</li>
+          <li>Статический анализ кода</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">31</span><span>Критерии usability</span></summary>
+      <div class="answer">
+        <ul>
+          <li>Простота использования</li>
+          <li>Эффективность выполнения задач</li>
+          <li>Удовлетворенность пользователя</li>
+          <li>Ошибки (их количество и серьезность)</li>
+          <li>Время на изучение интерфейса</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">32</span><span>Принципы usability по Нильсену</span></summary>
+      <div class="answer">
+        <ul>
+          <li>Простота и ясность интерфейса</li>
+          <li>Ориентированность на пользователя</li>
+          <li>Обратная связь</li>
+          <li>Уменьшение когнитивной нагрузки</li>
+          <li>Последовательность действий</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">33</span><span>Разница во взглядах на продукт клиента и пользователя? Почему есть разница?</span></summary>
+      <div class="answer">
+        <p><strong>Клиент</strong> — заинтересован в бизнес-целях и выгоде от продукта.</p>
+        <p><strong>Пользователь</strong> — заинтересован в удобстве и эффективности использования продукта.</p>
+        <p>Разница существует, потому что клиенты и пользователи могут иметь разные приоритеты и ожидания от продукта.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">34</span><span>Что мы узнаем о пользователях для повышения usability?</span></summary>
+      <div class="answer">
+        <ul>
+          <li>Целевую аудиторию</li>
+          <li>Цели и задачи пользователей</li>
+          <li>Ожидания от продукта</li>
+          <li>Опыт использования аналогичных продуктов</li>
+          <li>Контекст использования</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">35</span><span>Почему столько внимания уделяется контролам при тестировании usability? Типичные ошибки с ними</span></summary>
+      <div class="answer">
+        <p><strong>Контролы</strong> — элементы интерфейса, через которые пользователь взаимодействует с системой.</p>
+        <p><strong>Типичные ошибки:</strong></p>
+        <ul>
+          <li>Неправильное расположение</li>
+          <li>Недостаточные размеры</li>
+          <li>Неочевидные метки</li>
+          <li>Отсутствие доступности для людей с ограниченными возможностями</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">36</span><span>Числовые методы оценки usability</span></summary>
+      <div class="answer">
+        <ul>
+          <li>Время выполнения задач</li>
+          <li>Количество ошибок</li>
+          <li>Уровень удовлетворенности (опросы и анкеты)</li>
+          <li>Количество действий для выполнения задачи</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">37</span><span>Какие виды тестирования производительности вам известны? Примеры.</span></summary>
+      <div class="answer">
+        <ul>
+          <li><strong>Нагрузочное тестирование:</strong> проверка работы системы при ожидаемой нагрузке. Пример: тестирование веб-сайта при 1000 одновременных пользователях.</li>
+          <li><strong>Стресс-тестирование:</strong> проверка работы системы при экстремальных условиях. Пример: тестирование при 10 000 одновременных пользователях.</li>
+          <li><strong>Тестирование устойчивости:</strong> проверка работы системы при продолжительной нагрузке. Пример: проверка работы сервера в течение 24 часов при постоянной нагрузке.</li>
+          <li><strong>Объемное тестирование:</strong> проверка работы системы при больших объемах данных. Пример: тестирование базы данных с миллионом записей.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">38</span><span>Какие цели и метрики тестирования производительности?</span></summary>
+      <div class="answer">
+        <p><strong>Цели:</strong></p>
+        <ul>
+          <li>Обеспечение стабильности и надежности системы</li>
+          <li>Выявление узких мест производительности</li>
+          <li>Оптимизация использования ресурсов</li>
+        </ul>
+        <p><strong>Метрики:</strong></p>
+        <ul>
+          <li>Время отклика</li>
+          <li>Пропускная способность</li>
+          <li>Использование ресурсов (ЦП, память, диск)</li>
+          <li>Количество одновременных пользователей</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">39</span><span>Цель и принципы нагрузочного тестирования</span></summary>
+      <div class="answer">
+        <p><strong>Цель:</strong> определение способности системы справляться с ожидаемой нагрузкой и выявление возможных проблем производительности.</p>
+        <p><strong>Принципы:</strong></p>
+        <ul>
+          <li>Реалистичные сценарии нагрузки</li>
+          <li>Постепенное увеличение нагрузки</li>
+          <li>Анализ результатов и выявление узких мест</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">40</span><span>Основные принципы нагрузочного тестирования</span></summary>
+      <div class="answer">
+        <ul>
+          <li>Постановка целей и задач</li>
+          <li>Определение тестовых сценариев</li>
+          <li>Настройка тестовой среды</li>
+          <li>Мониторинг системы</li>
+          <li>Анализ результатов</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">41</span><span>Показатели производительности приложения, которые можно получить при нагрузочном тестировании</span></summary>
+      <div class="answer">
+        <ul>
+          <li>Время отклика на запросы</li>
+          <li>Пропускная способность системы</li>
+          <li>Использование процессора и памяти</li>
+          <li>Количество ошибок при выполнении запросов</li>
+          <li>Среднее время обработки транзакций</li>
+        </ul>
+      </div>
+    </details>
+
+  </div>
+  <div class="no-results" id="noResults">Ничего не найдено 🔍</div>
+</main>
+
+<script>
+  /* ES5-совместимый код — работает в любом браузере, включая старые движки */
+  var search = document.getElementById('search');
+  var nodeList = document.querySelectorAll('details');
+  var items = [];
+  for (var i = 0; i < nodeList.length; i++) { items.push(nodeList[i]); }
+  var count = document.getElementById('count');
+  var noResults = document.getElementById('noResults');
+
+  // сохраняем оригинальный текст для подсветки
+  for (var i = 0; i < items.length; i++) {
+    var parts = items[i].querySelectorAll('summary span:last-child, .answer');
+    for (var j = 0; j < parts.length; j++) {
+      parts[j].setAttribute('data-orig', parts[j].innerHTML);
+    }
+  }
+
+  function escapeReg(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+  function highlight(el, query) {
+    var orig = el.getAttribute('data-orig');
+    if (!query) { el.innerHTML = orig; return; }
+    // подсветка только текста, не задевая html-теги
+    var re = new RegExp('(?![^<]*>)(' + escapeReg(query) + ')', 'gi');
+    el.innerHTML = orig.replace(re, '<mark>$1</mark>');
+  }
+
+  function update() {
+    var q = search.value.replace(/^\s+|\s+$/g, '').toLowerCase();
+    var visible = 0;
+    for (var i = 0; i < items.length; i++) {
+      var d = items[i];
+      var text = (d.textContent || d.innerText || '').toLowerCase();
+      var match = !q || text.indexOf(q) !== -1;
+      d.style.display = match ? '' : 'none';
+      if (match) {
+        visible++;
+        var parts = d.querySelectorAll('summary span:last-child, .answer');
+        for (var j = 0; j < parts.length; j++) { highlight(parts[j], q); }
+        if (q) { d.open = true; }
+      }
+    }
+    noResults.style.display = visible ? 'none' : 'block';
+    count.textContent = q ? (visible + ' из ' + items.length) : (items.length + ' вопросов');
+  }
+
+  function setAll(open) {
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].style.display !== 'none') { items[i].open = open; }
+    }
+  }
+
+  if (search.addEventListener) {
+    search.addEventListener('input', update);
+    search.addEventListener('keyup', update);
+  } else if (search.attachEvent) {
+    search.attachEvent('onkeyup', update);
+  }
+  update();
+</script>
+</body>
+</html>
