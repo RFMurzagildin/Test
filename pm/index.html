@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Управление проектами — Вопросы к экзамену</title>
+<style>
+  :root {
+    --bg: #f5f6f8;
+    --card: #ffffff;
+    --accent: #7c3aed;
+    --accent-soft: #ede9fe;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --mark: #fde68a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 20px 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  h1 { margin: 0 0 12px; font-size: 19px; }
+  .search-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  #search {
+    flex: 1; min-width: 220px; padding: 11px 14px; font-size: 16px;
+    border: 2px solid var(--border); border-radius: 10px; outline: none;
+    transition: border-color .15s;
+  }
+  #search:focus { border-color: var(--accent); }
+  #count { font-size: 13px; color: var(--muted); white-space: nowrap; }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 8px; }
+  main { max-width: 900px; margin: 0 auto; padding: 18px 16px 60px; }
+  details {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    margin-bottom: 10px; overflow: hidden; transition: box-shadow .15s;
+  }
+  details[open] { box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+  summary {
+    cursor: pointer; padding: 14px 16px; font-weight: 600; font-size: 15px;
+    list-style: none; display: flex; gap: 10px; align-items: flex-start;
+  }
+  summary::-webkit-details-marker { display: none; }
+  .num {
+    flex: 0 0 auto; background: var(--accent-soft); color: var(--accent);
+    border-radius: 7px; min-width: 28px; text-align: center; padding: 2px 7px;
+    font-size: 13px; font-weight: 700;
+  }
+  .answer { padding: 4px 18px 18px; border-top: 1px solid var(--border); color: var(--text); }
+  .answer p { margin: 10px 0; }
+  .answer ul { margin: 8px 0; padding-left: 22px; }
+  .answer li { margin: 3px 0; }
+  .answer strong { color: #111827; }
+  .answer table { border-collapse: collapse; margin: 10px 0; width: 100%; font-size: 14px; }
+  .answer th, .answer td { border: 1px solid var(--border); padding: 6px 9px; text-align: left; vertical-align: top; }
+  .answer th { background: var(--accent-soft); }
+  mark { background: var(--mark); border-radius: 3px; padding: 0 2px; }
+  .no-results { text-align: center; color: var(--muted); padding: 40px 0; display: none; }
+  .toolbar { display: flex; gap: 8px; margin-top: 10px; }
+  .toolbar button {
+    border: 1px solid var(--border); background: var(--card); border-radius: 8px;
+    padding: 6px 12px; font-size: 13px; cursor: pointer; color: var(--text);
+  }
+  .toolbar button:hover { background: var(--accent-soft); border-color: var(--accent); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Управление проектами — Вопросы к экзамену</h1>
+  <div class="search-row">
+    <input id="search" type="text" placeholder="Поиск… (например: Scrum, WBS, критический путь, NPV)" autocomplete="off" autofocus>
+    <span id="count"></span>
+  </div>
+  <div class="toolbar">
+    <button onclick="setAll(true)">Развернуть всё</button>
+    <button onclick="setAll(false)">Свернуть всё</button>
+  </div>
+  <div class="hint">Печатайте ключевые слова — список фильтруется мгновенно, совпадения подсвечиваются.</div>
+</header>
+
+<main>
+  <div id="list">
+
+    <details>
+      <summary><span class="num">1</span><span>Понятие проект и проектная деятельность. Становление управления проектами как научной дисциплины</span></summary>
+      <div class="answer">
+        <p><strong>Проект</strong> — временное предприятие, направленное на создание уникального продукта, услуги или результата. Ключевые признаки:</p>
+        <ul>
+          <li><strong>Временность</strong> — есть чёткое начало и конец;</li>
+          <li><strong>Уникальность</strong> результата;</li>
+          <li><strong>Ограниченность</strong> ресурсов (время, деньги, люди);</li>
+          <li><strong>Последовательная разработка</strong> — поэтапное уточнение.</li>
+        </ul>
+        <p><strong>Проектная деятельность</strong> — деятельность по управлению проектами: планирование, организация и контроль ресурсов для достижения целей проекта в рамках заданных ограничений.</p>
+        <p><strong>Управление проектами</strong> — применение знаний, навыков, методов и инструментов к работам проекта для удовлетворения его требований.</p>
+        <p><strong>Становление как научной дисциплины:</strong></p>
+        <ul>
+          <li>1910-е — диаграмма Ганта;</li>
+          <li>1950-е — методы сетевого планирования <strong>CPM</strong> (критический путь) и <strong>PERT</strong>; крупные оборонные и космические программы (Manhattan, Polaris, Apollo);</li>
+          <li>1969 — основан институт <strong>PMI</strong> (Project Management Institute);</li>
+          <li>1987 — первый свод знаний <strong>PMBOK</strong>; далее PRINCE2, ISO 21500, ICB (IPMA), ГОСТ Р 54869.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">2</span><span>Отличие проектной деятельности от операционной деятельности</span></summary>
+      <div class="answer">
+        <table>
+          <tr><th>Критерий</th><th>Проектная</th><th>Операционная</th></tr>
+          <tr><td>Длительность</td><td>Временная (начало и конец)</td><td>Постоянная, непрерывная</td></tr>
+          <tr><td>Результат</td><td>Уникальный</td><td>Типовой, повторяющийся</td></tr>
+          <tr><td>Характер работ</td><td>Новые, неповторяющиеся</td><td>Рутинные, повторяющиеся</td></tr>
+          <tr><td>Цель</td><td>Достичь цели и завершиться</td><td>Поддерживать бизнес</td></tr>
+          <tr><td>Изменения</td><td>Создаёт изменения</td><td>Сохраняет стабильность</td></tr>
+        </table>
+        <p>Общее: выполняются людьми, ограничены ресурсами, планируются и контролируются. Проекты часто инициируют изменения, результаты которых затем переходят в операционную деятельность.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">3</span><span>Цель и основные ограничения проекта</span></summary>
+      <div class="answer">
+        <p><strong>Цель проекта</strong> — желаемый конечный результат, ради которого проект запускается. Должна быть <strong>SMART</strong>: конкретной (Specific), измеримой (Measurable), достижимой (Achievable), значимой (Relevant), ограниченной по времени (Time-bound).</p>
+        <p><strong>Основные ограничения — «тройное ограничение» (треугольник проекта):</strong></p>
+        <ul>
+          <li><strong>Содержание (Scope)</strong> — объём работ и требований;</li>
+          <li><strong>Время (Time)</strong> — сроки;</li>
+          <li><strong>Стоимость (Cost)</strong> — бюджет.</li>
+        </ul>
+        <p>В центре треугольника — <strong>качество</strong>. Изменение одного ограничения влияет на остальные (нельзя расширить содержание, не затронув срок или бюджет). Расширенная модель добавляет: качество, риски, ресурсы.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">4</span><span>Заинтересованные стороны и организационная структура проекта</span></summary>
+      <div class="answer">
+        <p><strong>Заинтересованные стороны (стейкхолдеры)</strong> — лица или организации, которые участвуют в проекте, влияют на него или испытывают его влияние:</p>
+        <ul>
+          <li><strong>Заказчик</strong> — тот, для кого создаётся продукт;</li>
+          <li><strong>Спонсор</strong> — финансирует и поддерживает проект;</li>
+          <li><strong>Руководитель проекта (ПМ)</strong>;</li>
+          <li><strong>Команда проекта</strong>;</li>
+          <li><strong>Пользователи</strong>, поставщики, подрядчики, госорганы, конкуренты.</li>
+        </ul>
+        <p><strong>Организационные структуры проекта</strong> (влияют на полномочия ПМ):</p>
+        <ul>
+          <li><strong>Функциональная</strong> — сотрудники подчинены функциональным руководителям, ПМ имеет минимум власти;</li>
+          <li><strong>Матричная</strong> (слабая / сбалансированная / сильная) — двойное подчинение, баланс власти между ПМ и функциональным руководителем;</li>
+          <li><strong>Проектная</strong> — команда полностью подчинена ПМ, у него максимум полномочий.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">5</span><span>Особенности IT-проектов. Виды IT-проектов</span></summary>
+      <div class="answer">
+        <p><strong>Особенности IT-проектов:</strong></p>
+        <ul>
+          <li>Высокая неопределённость и быстрое изменение требований;</li>
+          <li>Нематериальный (невидимый) продукт — трудно оценить прогресс;</li>
+          <li>Сильная зависимость от квалификации и мотивации людей;</li>
+          <li>Технологические риски, быстрое устаревание технологий;</li>
+          <li>Сложность оценки сроков и трудозатрат.</li>
+        </ul>
+        <p><strong>Виды IT-проектов:</strong></p>
+        <ul>
+          <li>Разработка ПО (заказная / коробочная);</li>
+          <li>Внедрение готовых систем (ERP, CRM, 1С);</li>
+          <li>Инфраструктурные (сети, серверы, ЦОД);</li>
+          <li>Интеграционные (связывание систем);</li>
+          <li>Миграция и модернизация (перенос данных, обновление);</li>
+          <li>Веб- и мобильные проекты;</li>
+          <li>Исследовательские (R&D, ML/AI).</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">6</span><span>Проблемы взаимодействия бизнеса и IT</span></summary>
+      <div class="answer">
+        <ul>
+          <li><strong>Разный язык и терминология</strong> — бизнес и IT не понимают друг друга;</li>
+          <li><strong>Различие целей</strong> — бизнес хочет прибыль и сроки, IT — качество и технологичность;</li>
+          <li><strong>Нечёткие и меняющиеся требования</strong>;</li>
+          <li><strong>Низкая вовлечённость бизнеса</strong> в проект, «поставил задачу и ушёл»;</li>
+          <li><strong>Разрыв ожиданий</strong> — бизнес недооценивает сложность и сроки;</li>
+          <li><strong>Недопонимание ценности IT</strong> — IT воспринимается как затраты, а не инвестиция;</li>
+          <li>Слабая коммуникация и отсутствие единого ответственного («бизнес-аналитика»).</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">7</span><span>Факторы успеха IT-проектов</span></summary>
+      <div class="answer">
+        <p>По исследованиям Standish Group (CHAOS Report) ключевые факторы:</p>
+        <ul>
+          <li><strong>Вовлечённость пользователей</strong> и заказчика;</li>
+          <li><strong>Поддержка высшего руководства</strong> (спонсора);</li>
+          <li><strong>Чёткие требования</strong> и цели;</li>
+          <li><strong>Грамотное планирование</strong> и реалистичные ожидания;</li>
+          <li><strong>Квалифицированная и мотивированная команда</strong>, опытный ПМ;</li>
+          <li><strong>Гибкость</strong> и итеративный подход, частая обратная связь;</li>
+          <li>Эффективная <strong>коммуникация</strong> и управление изменениями;</li>
+          <li>Декомпозиция на небольшие управляемые этапы.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">8</span><span>Понятие жизненного цикла проекта. Фазы жизненного цикла</span></summary>
+      <div class="answer">
+        <p><strong>Жизненный цикл проекта (ЖЦ)</strong> — набор последовательных фаз, которые проходит проект от начала до завершения. Структурирует работу и упрощает управление.</p>
+        <p><strong>Типовые фазы (группы процессов по PMBOK):</strong></p>
+        <ul>
+          <li><strong>Инициация</strong> — обоснование, устав проекта, определение стейкхолдеров;</li>
+          <li><strong>Планирование</strong> — план проекта, содержание, сроки, бюджет, риски;</li>
+          <li><strong>Исполнение</strong> — выполнение работ, создание продукта;</li>
+          <li><strong>Мониторинг и контроль</strong> — отслеживание отклонений, управление изменениями (идёт параллельно);</li>
+          <li><strong>Завершение</strong> — сдача результата, закрытие, извлечённые уроки.</li>
+        </ul>
+        <p>По фазам: затраты и численность команды растут к середине и падают к концу; стоимость изменений и рисков максимальна в начале и снижается к завершению.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">9</span><span>Предиктивный жизненный цикл</span></summary>
+      <div class="answer">
+        <p><strong>Предиктивный (каскадный, водопадный / Waterfall)</strong> ЖЦ — содержание, сроки и стоимость определяются на ранних этапах, а изменения по ходу минимизируются.</p>
+        <ul>
+          <li>Фазы выполняются <strong>строго последовательно</strong>: требования → проектирование → разработка → тестирование → внедрение;</li>
+          <li>Каждая фаза начинается после завершения предыдущей;</li>
+          <li><strong>Плюсы:</strong> предсказуемость, простота контроля, чёткая документация;</li>
+          <li><strong>Минусы:</strong> негибкость, поздняя обратная связь, высокая цена изменений;</li>
+          <li><strong>Когда применять:</strong> стабильные, хорошо понятные требования.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">10</span><span>Итеративный жизненный цикл</span></summary>
+      <div class="answer">
+        <p><strong>Итеративный</strong> ЖЦ — продукт разрабатывается через повторяющиеся циклы (итерации), на каждом из которых уточняются и улучшаются требования и решения.</p>
+        <ul>
+          <li>Сначала создаётся общая версия, затем она <strong>дорабатывается и уточняется</strong> в каждой итерации;</li>
+          <li>Активно используется <strong>прототипирование</strong> и обратная связь;</li>
+          <li>Подходит при <strong>неопределённых требованиях</strong>, которые проясняются по ходу;</li>
+          <li>Отличие от инкрементного: итерации <strong>улучшают</strong> уже сделанное, а не добавляют новые куски.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">11</span><span>Инкрементный жизненный цикл</span></summary>
+      <div class="answer">
+        <p><strong>Инкрементный</strong> ЖЦ — продукт создаётся последовательными приращениями (<strong>инкрементами</strong>), каждое из которых добавляет новую готовую функциональность.</p>
+        <ul>
+          <li>Продукт делится на части, которые разрабатываются и поставляются по очереди;</li>
+          <li>Заказчик <strong>раньше получает работающие куски</strong> продукта;</li>
+          <li>Каждый инкремент — законченная и пригодная к использованию функциональность;</li>
+          <li>Отличие от итеративного: инкрементный <strong>добавляет новое</strong>, итеративный — <strong>улучшает существующее</strong>. На практике обычно сочетаются (итеративно-инкрементный подход).</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">12</span><span>Гибкий (Agile) жизненный цикл</span></summary>
+      <div class="answer">
+        <p><strong>Гибкий (Agile)</strong> ЖЦ — итеративно-инкрементный подход, ориентированный на быструю адаптацию к изменениям и частую поставку ценности.</p>
+        <ul>
+          <li>Короткие итерации (спринты), в конце каждой — работающий инкремент;</li>
+          <li>Требования (backlog) <strong>уточняются постоянно</strong>, приоритеты пересматриваются;</li>
+          <li>Тесное взаимодействие с заказчиком, частая обратная связь;</li>
+          <li>Самоорганизующиеся команды;</li>
+          <li>Подходит при <strong>высокой неопределённости</strong> и меняющихся требованиях. Реализуется через Scrum, Kanban, XP и др.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">13</span><span>Стандарты управления проектами</span></summary>
+      <div class="answer">
+        <ul>
+          <li><strong>PMBOK</strong> (PMI, США) — свод знаний по управлению проектами;</li>
+          <li><strong>PRINCE2</strong> (Великобритания) — процессно-ориентированная методология;</li>
+          <li><strong>ISO 21500</strong> — международный стандарт-руководство;</li>
+          <li><strong>ICB</strong> (IPMA) — стандарт компетенций менеджера проектов;</li>
+          <li><strong>ГОСТ Р 54869–2011</strong> — российский стандарт по управлению проектами;</li>
+          <li><strong>Agile / Scrum Guide</strong> — гибкие подходы;</li>
+          <li><strong>P2M</strong> (Япония) — управление проектами и программами.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">14</span><span>Корпоративный стандарт управления проектами</span></summary>
+      <div class="answer">
+        <p><strong>Корпоративный стандарт управления проектами</strong> — внутренний нормативный документ организации, адаптирующий общие методологии (PMBOK, PRINCE2 и т.д.) под её специфику.</p>
+        <p>Содержит:</p>
+        <ul>
+          <li>Единую терминологию и классификацию проектов;</li>
+          <li>Процессы и процедуры управления;</li>
+          <li>Роли, права и ответственность участников;</li>
+          <li>Шаблоны документов (устав, план, отчёты);</li>
+          <li>Критерии оценки и контроля.</li>
+        </ul>
+        <p>Является частью <strong>КСУП</strong> (корпоративной системы управления проектами), куда также входят проектный офис (PMO) и информационная система.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">15</span><span>Предпосылки возникновения Agile методологии. Agile манифест</span></summary>
+      <div class="answer">
+        <p><strong>Предпосылки:</strong> кризис каскадной модели — долгие сроки, дорогие изменения, продукт часто не соответствовал реальным потребностям к моменту выпуска, требования менялись быстрее, чем шла разработка.</p>
+        <p><strong>Agile-манифест</strong> — принят в 2001 году 17 разработчиками. Декларирует 4 ценности (левое ценнее правого, но правое тоже важно):</p>
+        <ul>
+          <li><strong>Люди и взаимодействие</strong> важнее процессов и инструментов;</li>
+          <li><strong>Работающий продукт</strong> важнее исчерпывающей документации;</li>
+          <li><strong>Сотрудничество с заказчиком</strong> важнее согласования условий контракта;</li>
+          <li><strong>Готовность к изменениям</strong> важнее следования первоначальному плану.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">16</span><span>Основные принципы Agile методологий</span></summary>
+      <div class="answer">
+        <p>За манифестом стоят <strong>12 принципов</strong>, ключевые из них:</p>
+        <ul>
+          <li>Наивысший приоритет — удовлетворение заказчика за счёт ранней и постоянной поставки ценного ПО;</li>
+          <li>Приветствие изменений требований даже на поздних этапах;</li>
+          <li>Частая поставка работающего продукта (недели, не месяцы);</li>
+          <li>Ежедневная совместная работа бизнеса и разработчиков;</li>
+          <li>Проекты строятся вокруг мотивированных людей, которым доверяют;</li>
+          <li>Личное общение — самый эффективный способ коммуникации;</li>
+          <li>Работающий продукт — главный показатель прогресса;</li>
+          <li>Поддержание постоянного устойчивого темпа;</li>
+          <li>Внимание к техническому совершенству и качеству;</li>
+          <li>Простота — искусство не делать лишней работы;</li>
+          <li>Самоорганизующиеся команды;</li>
+          <li>Регулярный анализ и улучшение работы (ретроспективы).</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">17</span><span>Фреймворк Scrum. Руководство по Scrum</span></summary>
+      <div class="answer">
+        <p><strong>Scrum</strong> — лёгкий фреймворк для разработки, поставки и поддержки сложных продуктов. Авторы — <strong>Кен Швабер и Джефф Сазерленд</strong>. Описан в документе <strong>Scrum Guide</strong> (Руководство по Scrum).</p>
+        <p>Scrum основан на <strong>эмпиризме</strong> (управление на основе опыта и фактов) и бережливом мышлении. Три столпа эмпиризма:</p>
+        <ul>
+          <li><strong>Прозрачность</strong> (Transparency);</li>
+          <li><strong>Инспекция</strong> (Inspection) — регулярная проверка;</li>
+          <li><strong>Адаптация</strong> (Adaptation) — корректировка по результатам.</li>
+        </ul>
+        <p>Ценности Scrum: <strong>приверженность, фокус, открытость, уважение, смелость</strong>. Включает 3 роли, 5 событий и 3 артефакта.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">18</span><span>Scrum команда</span></summary>
+      <div class="answer">
+        <p><strong>Scrum-команда</strong> — небольшая (обычно до 10 человек), самоорганизующаяся и кросс-функциональная группа, обладающая всеми навыками для создания ценности. Не делится на подкоманды и иерархии. Состоит из:</p>
+        <ul>
+          <li><strong>Product Owner</strong> — отвечает за ценность продукта и Product Backlog;</li>
+          <li><strong>Scrum Master</strong> — отвечает за эффективность Scrum;</li>
+          <li><strong>Developers (разработчики)</strong> — создают инкремент.</li>
+        </ul>
+        <p>Команда сама отвечает за всю работу: планирование, создание, проверку и адаптацию. Цель — каждый спринт создавать ценный, полезный инкремент.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">19</span><span>События Scrum</span></summary>
+      <div class="answer">
+        <p>Все события ограничены по времени (таймбоксы) и служат для инспекции и адаптации:</p>
+        <ul>
+          <li><strong>Спринт (Sprint)</strong> — контейнер для всех остальных событий, фиксированный отрезок (1–4 недели);</li>
+          <li><strong>Планирование спринта (Sprint Planning)</strong> — определение цели спринта и плана работ;</li>
+          <li><strong>Ежедневный скрам (Daily Scrum)</strong> — 15 минут, синхронизация команды и план на день;</li>
+          <li><strong>Обзор спринта (Sprint Review)</strong> — демонстрация инкремента, сбор обратной связи;</li>
+          <li><strong>Ретроспектива (Sprint Retrospective)</strong> — анализ процесса и план улучшений.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">20</span><span>Артефакты в Scrum</span></summary>
+      <div class="answer">
+        <p>Артефакты представляют ценность и обеспечивают прозрачность. У каждого есть «обязательство» (commitment):</p>
+        <ul>
+          <li><strong>Product Backlog</strong> — упорядоченный список всего необходимого для продукта. Обязательство — <strong>Product Goal</strong> (цель продукта);</li>
+          <li><strong>Sprint Backlog</strong> — план команды на спринт (цель + выбранные элементы + план). Обязательство — <strong>Sprint Goal</strong> (цель спринта);</li>
+          <li><strong>Increment (Инкремент)</strong> — конкретный готовый результат, приближающий к цели продукта. Обязательство — <strong>Definition of Done</strong> (критерии готовности).</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">21</span><span>Длительность спринта. Как определяется длительность спринта</span></summary>
+      <div class="answer">
+        <p><strong>Спринт</strong> длится <strong>от 1 до 4 недель</strong>, длительность фиксированная и не меняется по ходу. Новый спринт начинается сразу после предыдущего.</p>
+        <p><strong>Как определяется:</strong></p>
+        <ul>
+          <li><strong>Уровень неопределённости</strong> требований — чем выше, тем короче спринт;</li>
+          <li><strong>Частота обратной связи</strong>, нужная заказчику;</li>
+          <li><strong>Риски</strong> — короткий спринт ограничивает стоимость ошибки и риск отклонения от цели;</li>
+          <li>Стабильность и зрелость команды.</li>
+        </ul>
+        <p>Чем короче спринт — тем чаще проверка и адаптация, но больше накладных расходов на события. Обычно выбирают 2 недели как баланс.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">22</span><span>Как происходит управление проектом по Scrum</span></summary>
+      <div class="answer">
+        <p>Управление строится на повторяющихся спринтах:</p>
+        <ul>
+          <li>Product Owner формирует и приоритизирует <strong>Product Backlog</strong>;</li>
+          <li>На <strong>Sprint Planning</strong> команда выбирает элементы и ставит цель спринта, формируя Sprint Backlog;</li>
+          <li>В ходе спринта команда работает, синхронизируясь на <strong>Daily Scrum</strong>;</li>
+          <li>В конце спринта создаётся готовый <strong>инкремент</strong>;</li>
+          <li>На <strong>Sprint Review</strong> инкремент демонстрируется, собирается обратная связь, корректируется backlog;</li>
+          <li>На <strong>ретроспективе</strong> улучшается процесс;</li>
+          <li>Цикл повторяется. Прогресс отслеживается по backlog и burndown-диаграммам.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">23</span><span>Роли в Scrum. Их характеристики</span></summary>
+      <div class="answer">
+        <p>В Scrum 3 роли (в новых версиях — «ответственности» в рамках единой команды):</p>
+        <ul>
+          <li><strong>Product Owner</strong> — отвечает за максимизацию ценности продукта и управление Product Backlog; представляет интересы заказчика и стейкхолдеров; расставляет приоритеты;</li>
+          <li><strong>Scrum Master</strong> — обеспечивает понимание и применение Scrum, устраняет препятствия, фасилитирует события, служит команде и организации (служащее лидерство);</li>
+          <li><strong>Developers (разработчики)</strong> — создают инкремент, сами планируют свою работу, отвечают за качество (Definition of Done), самоорганизуются.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">24</span><span>Что такое Product backlog. Кто может с ним работать?</span></summary>
+      <div class="answer">
+        <p><strong>Product Backlog</strong> — единый упорядоченный (по приоритету) список всего, что может понадобиться продукту: функций, требований, улучшений, исправлений. Это динамичный, постоянно развивающийся артефакт, который никогда не бывает полным.</p>
+        <ul>
+          <li><strong>Владелец и единственный ответственный — Product Owner</strong>: он определяет содержание, порядок и приоритеты;</li>
+          <li>Уточнять элементы (Backlog Refinement) — добавлять детали, оценки, разбивать — может <strong>вся Scrum-команда</strong> (разработчики, при участии PO);</li>
+          <li>Вносить предложения могут стейкхолдеры, но решение о включении и приоритете — за PO.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">25</span><span>Sprint backlog. Что нужно сделать для исправления ситуации?</span></summary>
+      <div class="answer">
+        <p><strong>Sprint Backlog</strong> — план работы команды на спринт. Состоит из: <strong>цели спринта</strong> (Sprint Goal), набора выбранных из Product Backlog элементов и плана их реализации. Принадлежит <strong>разработчикам</strong> и обновляется ими ежедневно.</p>
+        <p><strong>Если работа отстаёт от плана (исправление ситуации):</strong></p>
+        <ul>
+          <li>Ежедневно на <strong>Daily Scrum</strong> отслеживать прогресс (burndown) и перепланировать оставшуюся работу;</li>
+          <li>При угрозе невыполнения — пересмотреть объём работ <strong>вместе с Product Owner</strong>, не меняя цель спринта;</li>
+          <li>Договориться с PO об удалении/добавлении элементов (scope), сохранив Sprint Goal;</li>
+          <li>Цель спринта остаётся неизменной — корректируется объём, а не цель.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">26</span><span>Sprint Review. Определение, основные характеристики</span></summary>
+      <div class="answer">
+        <p><strong>Sprint Review (Обзор спринта)</strong> — событие в конце спринта, на котором инспектируется результат (инкремент) и определяются дальнейшие адаптации.</p>
+        <p><strong>Характеристики:</strong></p>
+        <ul>
+          <li>Участвуют Scrum-команда и приглашённые <strong>стейкхолдеры</strong>;</li>
+          <li>Команда <strong>демонстрирует готовый инкремент</strong>, обсуждается что сделано;</li>
+          <li>Собирается <strong>обратная связь</strong>, обсуждается рынок и дальнейшие шаги;</li>
+          <li>Product Backlog при необходимости <strong>корректируется</strong>;</li>
+          <li>Это рабочая сессия, а не только презентация; неформальное событие;</li>
+          <li>Таймбокс — до 4 часов при месячном спринте (меньше для коротких).</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">27</span><span>Scrum master. Основные функции, зоны ответственности</span></summary>
+      <div class="answer">
+        <p><strong>Scrum Master</strong> отвечает за результативность Scrum-команды и правильное применение Scrum. Это служащий лидер (servant leader).</p>
+        <p><strong>Функции и зоны ответственности:</strong></p>
+        <ul>
+          <li>Обучает команду и организацию принципам и практикам Scrum;</li>
+          <li>Фасилитирует события Scrum, следит за соблюдением таймбоксов;</li>
+          <li><strong>Устраняет препятствия</strong> (impediments), мешающие команде;</li>
+          <li>Защищает команду от внешних помех, помогает самоорганизации;</li>
+          <li>Помогает Product Owner в управлении backlog и постановке целей;</li>
+          <li>Способствует улучшению процессов в масштабах всей организации.</li>
+        </ul>
+        <p>Не является менеджером и не раздаёт задачи.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">28</span><span>Retrospective. Определение, основные характеристики</span></summary>
+      <div class="answer">
+        <p><strong>Sprint Retrospective (Ретроспектива)</strong> — событие для инспекции прошедшего спринта и планирования улучшений. Проводится <strong>после Sprint Review и перед следующим Sprint Planning</strong>.</p>
+        <p><strong>Характеристики:</strong></p>
+        <ul>
+          <li>Участвует только Scrum-команда;</li>
+          <li>Анализируются <strong>люди, взаимодействия, процессы, инструменты</strong> и Definition of Done;</li>
+          <li>Обсуждают: что прошло хорошо, какие были проблемы, как их решить;</li>
+          <li>Результат — <strong>конкретные улучшения</strong>, часто добавляемые в следующий спринт;</li>
+          <li>Реализует принцип непрерывного совершенствования;</li>
+          <li>Таймбокс — до 3 часов при месячном спринте.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">29</span><span>Product owner. Основные функции, зоны ответственности</span></summary>
+      <div class="answer">
+        <p><strong>Product Owner (Владелец продукта)</strong> отвечает за <strong>максимизацию ценности</strong> продукта, создаваемого командой. Это одно лицо, а не комитет.</p>
+        <p><strong>Функции и зоны ответственности:</strong></p>
+        <ul>
+          <li>Формулирует и доносит <strong>Product Goal</strong> (цель продукта);</li>
+          <li>Создаёт, формулирует и <strong>приоритизирует элементы Product Backlog</strong>;</li>
+          <li>Обеспечивает прозрачность и понятность backlog для команды;</li>
+          <li>Представляет интересы заказчика, пользователей и стейкхолдеров;</li>
+          <li>Принимает решения о содержании и порядке работ;</li>
+          <li>Принимает/отклоняет результаты по итогам спринта.</li>
+        </ul>
+        <p>Решения PO должны уважаться всей организацией.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">30</span><span>Инструменты управления IT-проектами</span></summary>
+      <div class="answer">
+        <ul>
+          <li><strong>Таск-трекеры / Agile-доски:</strong> Jira, Trello, YouTrack, Asana, Redmine, GitLab/GitHub Issues, Kaiten, YouGile;</li>
+          <li><strong>Планирование и расписание:</strong> MS Project, GanttPRO (диаграммы Ганта, сетевые графики);</li>
+          <li><strong>Документация и базы знаний:</strong> Confluence, Notion;</li>
+          <li><strong>Коммуникация:</strong> Slack, MS Teams, Telegram;</li>
+          <li><strong>Контроль версий и CI/CD:</strong> Git, GitLab CI, Jenkins;</li>
+          <li><strong>Метрики и отчётность:</strong> burndown/burnup-диаграммы, дашборды.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">31</span><span>Основные принципы и инструменты метода Kanban в управлении IT-проектами</span></summary>
+      <div class="answer">
+        <p><strong>Kanban</strong> — метод управления потоком работ с акцентом на визуализацию и непрерывную поставку (без фиксированных итераций).</p>
+        <p><strong>Принципы:</strong></p>
+        <ul>
+          <li><strong>Визуализируйте работу</strong> (канбан-доска со столбцами);</li>
+          <li><strong>Ограничивайте WIP</strong> (work in progress) — лимит одновременных задач;</li>
+          <li><strong>Управляйте потоком</strong> работ, делайте его равномерным;</li>
+          <li><strong>Делайте правила явными</strong>;</li>
+          <li>Внедряйте <strong>петли обратной связи</strong>;</li>
+          <li>Улучшайте процесс эволюционно.</li>
+        </ul>
+        <p><strong>Инструменты и метрики:</strong> канбан-доска, WIP-лимиты, <strong>Lead Time</strong> (время от заявки до готовности), <strong>Cycle Time</strong> (время в работе), диаграмма кумулятивного потока (CFD).</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">32</span><span>Управление содержанием IT-проекта. Разработка иерархической структуры работ (ИСР/WBS)</span></summary>
+      <div class="answer">
+        <p><strong>Управление содержанием (Scope Management)</strong> обеспечивает включение в проект всех необходимых работ и только их. Процессы:</p>
+        <ul>
+          <li>Сбор требований;</li>
+          <li>Определение содержания (Scope Statement);</li>
+          <li>Создание <strong>ИСР (WBS)</strong>;</li>
+          <li>Подтверждение содержания (приёмка результатов);</li>
+          <li>Контроль содержания (борьба со «scope creep» — расползанием границ).</li>
+        </ul>
+        <p><strong>ИСР (Иерархическая структура работ, WBS)</strong> — иерархическая декомпозиция всего объёма работ на более мелкие управляемые элементы вплоть до <strong>пакетов работ</strong> (нижний уровень). Помогает оценить сроки, стоимость, распределить ответственность. Правило 100% — сумма дочерних элементов = 100% работ родителя.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">33</span><span>Определение операций и их последовательности</span></summary>
+      <div class="answer">
+        <p><strong>Определение операций</strong> — декомпозиция пакетов работ ИСР на конкретные <strong>операции (активности)</strong>, которые нужно выполнить для создания результатов. Итог — список операций с описанием.</p>
+        <p><strong>Определение последовательности операций</strong> — установление логических <strong>зависимостей</strong> между операциями. Типы зависимостей:</p>
+        <ul>
+          <li><strong>Finish-to-Start (FS)</strong> — финиш-старт (самая частая);</li>
+          <li><strong>Start-to-Start (SS)</strong> — старт-старт;</li>
+          <li><strong>Finish-to-Finish (FF)</strong> — финиш-финиш;</li>
+          <li><strong>Start-to-Finish (SF)</strong> — старт-финиш.</li>
+        </ul>
+        <p>Используется <strong>метод предшествования (PDM)</strong>; учитываются опережения (lead) и задержки (lag). Результат — основа для сетевого графика.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">34</span><span>Построение и анализ сетевых графиков</span></summary>
+      <div class="answer">
+        <p><strong>Сетевой график</strong> — графическое представление операций проекта и логических связей между ними. Виды: «операции в узлах» (PDM/AON) и «операции на стрелках» (AOA).</p>
+        <p><strong>Анализ — метод критического пути (CPM):</strong></p>
+        <ul>
+          <li>Прямой проход — расчёт ранних сроков начала/окончания (ES, EF);</li>
+          <li>Обратный проход — расчёт поздних сроков (LS, LF);</li>
+          <li><strong>Резерв времени (Float/Slack)</strong> = LS − ES;</li>
+          <li><strong>Критический путь</strong> — самая длинная цепочка операций с нулевым резервом; определяет минимальную длительность проекта;</li>
+          <li>Задержка любой операции на критическом пути сдвигает весь проект.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">35</span><span>Инструменты и методы управления расписанием</span></summary>
+      <div class="answer">
+        <ul>
+          <li><strong>Диаграмма Ганта</strong> — визуализация операций во времени;</li>
+          <li><strong>Метод критического пути (CPM)</strong> — расчёт сроков и резервов;</li>
+          <li><strong>Метод PERT</strong> — оценка длительности по трём точкам: (Оптимистичная + 4×Вероятная + Пессимистичная) / 6;</li>
+          <li><strong>Метод критической цепи (CCM)</strong> — учёт ресурсов и буферов;</li>
+          <li><strong>Выравнивание ресурсов</strong> (resource leveling);</li>
+          <li><strong>Сжатие расписания:</strong> <em>crashing</em> (добавление ресурсов) и <em>fast tracking</em> (параллельное выполнение операций);</li>
+          <li>Анализ резервов, контрольные события (вехи).</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">36</span><span>Управление ресурсами IT-проекта</span></summary>
+      <div class="answer">
+        <p><strong>Управление ресурсами</strong> обеспечивает наличие и эффективное использование ресурсов (людских и материальных). Процессы:</p>
+        <ul>
+          <li><strong>Планирование</strong> управления ресурсами;</li>
+          <li><strong>Оценка</strong> необходимых ресурсов для операций;</li>
+          <li><strong>Приобретение</strong> ресурсов (набор команды, закупки);</li>
+          <li><strong>Развитие команды</strong> — обучение, сплочение, мотивация;</li>
+          <li><strong>Управление командой</strong> — оценка работы, разрешение конфликтов;</li>
+          <li><strong>Контроль ресурсов</strong> — мониторинг использования.</li>
+        </ul>
+        <p>Инструменты: матрица ответственности <strong>RACI</strong>, гистограммы загрузки, выравнивание ресурсов. В IT критичен дефицит квалифицированных специалистов.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">37</span><span>Управление рисками IT-проекта</span></summary>
+      <div class="answer">
+        <p><strong>Риск</strong> — неопределённое событие, которое в случае наступления влияет на цели проекта (угроза или возможность). Процессы управления рисками:</p>
+        <ul>
+          <li><strong>Идентификация</strong> рисков → ведение <strong>реестра рисков</strong>;</li>
+          <li><strong>Качественный анализ</strong> — оценка вероятности и влияния (матрица вероятность/воздействие);</li>
+          <li><strong>Количественный анализ</strong> — численная оценка (напр., метод Монте-Карло, дерево решений);</li>
+          <li><strong>Планирование реагирования.</strong> Для угроз: <em>избежание, передача (страховка/аутсорс), снижение, принятие</em>; для возможностей: использование, разделение, усиление;</li>
+          <li><strong>Мониторинг и контроль</strong> рисков на всём протяжении проекта.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">38</span><span>Оценка эффективности IT-проекта</span></summary>
+      <div class="answer">
+        <p>Эффективность оценивается финансовыми и нефинансовыми показателями.</p>
+        <p><strong>Финансовые:</strong> NPV, IRR, ROI, срок окупаемости (PP), индекс рентабельности (PI) — см. вопрос 40.</p>
+        <p><strong>Контроль исполнения — метод освоенного объёма (EVM):</strong></p>
+        <ul>
+          <li><strong>PV</strong> — плановый объём, <strong>EV</strong> — освоенный объём, <strong>AC</strong> — фактические затраты;</li>
+          <li><strong>SV</strong> = EV − PV (отклонение по срокам), <strong>CV</strong> = EV − AC (по стоимости);</li>
+          <li><strong>SPI</strong> = EV / PV (индекс выполнения сроков), <strong>CPI</strong> = EV / AC (индекс выполнения стоимости).</li>
+        </ul>
+        <p><strong>Нефинансовые:</strong> удовлетворённость заказчика, качество продукта, стратегическая ценность, улучшение бизнес-процессов.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">39</span><span>Бюджет IT-проекта</span></summary>
+      <div class="answer">
+        <p><strong>Бюджет проекта</strong> — распределённая во времени оценка стоимости всех работ, утверждённая как базовый план по стоимости.</p>
+        <p><strong>Формирование (Cost Management):</strong></p>
+        <ul>
+          <li>Стоимостная <strong>оценка</strong> операций (аналоговая, параметрическая, «снизу вверх», по трём точкам);</li>
+          <li>Агрегирование затрат → <strong>базовый план по стоимости (Cost Baseline)</strong>;</li>
+          <li>Добавление <strong>резервов</strong>: на возможные потери (contingency) и управленческий резерв (management reserve).</li>
+        </ul>
+        <p><strong>Статьи затрат IT-проекта:</strong> оплата труда команды (основная доля), лицензии и ПО, оборудование и инфраструктура (серверы, облако), аутсорс/подряд, обучение, накладные расходы.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">40</span><span>Расчёт финансовых показателей IT-проекта</span></summary>
+      <div class="answer">
+        <ul>
+          <li><strong>NPV (чистая приведённая стоимость)</strong> — сумма дисконтированных денежных потоков минус первоначальные инвестиции. NPV &gt; 0 — проект выгоден. NPV = Σ CFₜ/(1+r)ᵗ − IC;</li>
+          <li><strong>IRR (внутренняя норма доходности)</strong> — ставка дисконтирования, при которой NPV = 0. Проект принимают, если IRR &gt; стоимости капитала;</li>
+          <li><strong>ROI (рентабельность инвестиций)</strong> = (Прибыль − Инвестиции) / Инвестиции × 100%;</li>
+          <li><strong>PI (индекс рентабельности)</strong> = PV доходов / Инвестиции. PI &gt; 1 — проект выгоден;</li>
+          <li><strong>PP (срок окупаемости)</strong> — время возврата вложений; <strong>DPP</strong> — то же с учётом дисконтирования.</li>
+        </ul>
+        <p>Дисконтирование учитывает, что деньги сегодня дороже, чем завтра (ставка r — стоимость капитала / требуемая доходность).</p>
+      </div>
+    </details>
+
+  </div>
+  <div class="no-results" id="noResults">Ничего не найдено 🔍</div>
+</main>
+
+<script>
+  /* ES5-совместимый код — работает в любом браузере, включая мобильные и старые движки */
+  var search = document.getElementById('search');
+  var nodeList = document.querySelectorAll('details');
+  var items = [];
+  for (var i = 0; i < nodeList.length; i++) { items.push(nodeList[i]); }
+  var count = document.getElementById('count');
+  var noResults = document.getElementById('noResults');
+
+  for (var i = 0; i < items.length; i++) {
+    var parts = items[i].querySelectorAll('summary span:last-child, .answer');
+    for (var j = 0; j < parts.length; j++) {
+      parts[j].setAttribute('data-orig', parts[j].innerHTML);
+    }
+  }
+
+  function escapeReg(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+  function highlight(el, query) {
+    var orig = el.getAttribute('data-orig');
+    if (!query) { el.innerHTML = orig; return; }
+    var re = new RegExp('(?![^<]*>)(' + escapeReg(query) + ')', 'gi');
+    el.innerHTML = orig.replace(re, '<mark>$1</mark>');
+  }
+
+  function update() {
+    var q = search.value.replace(/^\s+|\s+$/g, '').toLowerCase();
+    var visible = 0;
+    for (var i = 0; i < items.length; i++) {
+      var d = items[i];
+      var text = (d.textContent || d.innerText || '').toLowerCase();
+      var match = !q || text.indexOf(q) !== -1;
+      d.style.display = match ? '' : 'none';
+      if (match) {
+        visible++;
+        var parts = d.querySelectorAll('summary span:last-child, .answer');
+        for (var j = 0; j < parts.length; j++) { highlight(parts[j], q); }
+        if (q) { d.open = true; }
+      }
+    }
+    noResults.style.display = visible ? 'none' : 'block';
+    count.textContent = q ? (visible + ' из ' + items.length) : (items.length + ' вопросов');
+  }
+
+  function setAll(open) {
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].style.display !== 'none') { items[i].open = open; }
+    }
+  }
+
+  if (search.addEventListener) {
+    search.addEventListener('input', update);
+    search.addEventListener('keyup', update);
+  } else if (search.attachEvent) {
+    search.attachEvent('onkeyup', update);
+  }
+  update();
+</script>
+</body>
+</html>
