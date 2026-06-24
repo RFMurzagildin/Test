@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Информационная безопасность — Вопросы к экзамену</title>
+<style>
+  :root {
+    --bg: #f5f6f8;
+    --card: #ffffff;
+    --accent: #0d9488;
+    --accent-soft: #ccfbf1;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --mark: #fde68a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 20px 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  h1 { margin: 0 0 12px; font-size: 19px; }
+  .search-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  #search {
+    flex: 1; min-width: 220px; padding: 11px 14px; font-size: 16px;
+    border: 2px solid var(--border); border-radius: 10px; outline: none;
+    transition: border-color .15s;
+  }
+  #search:focus { border-color: var(--accent); }
+  #count { font-size: 13px; color: var(--muted); white-space: nowrap; }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 8px; }
+  main { max-width: 900px; margin: 0 auto; padding: 18px 16px 60px; }
+  details {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    margin-bottom: 10px; overflow: hidden; transition: box-shadow .15s;
+  }
+  details[open] { box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+  summary {
+    cursor: pointer; padding: 14px 16px; font-weight: 600; font-size: 15px;
+    list-style: none; display: flex; gap: 10px; align-items: flex-start;
+  }
+  summary::-webkit-details-marker { display: none; }
+  .num {
+    flex: 0 0 auto; background: var(--accent-soft); color: var(--accent);
+    border-radius: 7px; min-width: 28px; text-align: center; padding: 2px 7px;
+    font-size: 13px; font-weight: 700;
+  }
+  .answer { padding: 4px 18px 18px; border-top: 1px solid var(--border); color: var(--text); }
+  .answer p { margin: 10px 0; }
+  .answer ul { margin: 8px 0; padding-left: 22px; }
+  .answer li { margin: 3px 0; }
+  .answer strong { color: #111827; }
+  .answer code { background: #f1f5f9; padding: 1px 5px; border-radius: 4px; font-size: 13px; }
+  .answer table { border-collapse: collapse; margin: 10px 0; width: 100%; font-size: 14px; }
+  .answer th, .answer td { border: 1px solid var(--border); padding: 6px 9px; text-align: left; vertical-align: top; }
+  .answer th { background: var(--accent-soft); }
+  mark { background: var(--mark); border-radius: 3px; padding: 0 2px; }
+  .no-results { text-align: center; color: var(--muted); padding: 40px 0; display: none; }
+  .toolbar { display: flex; gap: 8px; margin-top: 10px; }
+  .toolbar button {
+    border: 1px solid var(--border); background: var(--card); border-radius: 8px;
+    padding: 6px 12px; font-size: 13px; cursor: pointer; color: var(--text);
+  }
+  .toolbar button:hover { background: var(--accent-soft); border-color: var(--accent); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Информационная безопасность — Вопросы к экзамену</h1>
+  <div class="search-row">
+    <input id="search" type="text" placeholder="Поиск… (например: SELinux, IDS, шифрование, угрозы)" autocomplete="off" autofocus>
+    <span id="count"></span>
+  </div>
+  <div class="toolbar">
+    <button onclick="setAll(true)">Развернуть всё</button>
+    <button onclick="setAll(false)">Свернуть всё</button>
+  </div>
+  <div class="hint">Печатайте ключевые слова — список фильтруется мгновенно, совпадения подсвечиваются.</div>
+</header>
+
+<main>
+  <div id="list">
+
+    <details>
+      <summary><span class="num">1</span><span>Общие понятия защиты информации</span></summary>
+      <div class="answer">
+        <p><strong>Защита информации (ЗИ)</strong> — деятельность по предотвращению утечки защищаемой информации, несанкционированных и непреднамеренных воздействий на неё.</p>
+        <p><strong>Информационная безопасность (ИБ)</strong> — состояние защищённости информации и поддерживающей её инфраструктуры от случайных или преднамеренных воздействий.</p>
+        <p>Базовые свойства, которые обеспечивает ИБ — <strong>триада CIA</strong>:</p>
+        <ul>
+          <li><strong>Конфиденциальность (Confidentiality)</strong> — доступ к информации только у тех, кому он разрешён;</li>
+          <li><strong>Целостность (Integrity)</strong> — защита от несанкционированного изменения;</li>
+          <li><strong>Доступность (Availability)</strong> — доступ к информации авторизованным пользователям по требованию.</li>
+        </ul>
+        <p>Дополнительно: <strong>аутентичность, неотказуемость (неотрекаемость), подотчётность</strong>. Защита обеспечивается комплексом правовых, организационных и технических мер.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">2</span><span>Уровни представления информации и особенности её защиты</span></summary>
+      <div class="answer">
+        <p>Информация может рассматриваться на нескольких уровнях представления, и на каждом — свои меры защиты:</p>
+        <ul>
+          <li><strong>Физический</strong> (носители, сигналы, излучения) — контроль доступа к носителям, экранирование, защита от ПЭМИН, уничтожение носителей;</li>
+          <li><strong>Синтаксический / логический</strong> (данные, файлы, форматы, биты) — шифрование, контроль целостности, разграничение доступа;</li>
+          <li><strong>Семантический</strong> (смысл, содержание) — разграничение по грифам секретности, защита от утечки смысла;</li>
+          <li><strong>Прагматический</strong> (ценность для пользователя) — оценка важности, категорирование.</li>
+        </ul>
+        <p>Также защиту строят по уровням инфраструктуры: <strong>аппаратный → ОС → СУБД → приложение → сеть</strong>. Принцип эшелонированной (многоуровневой) обороны — defense in depth.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">3</span><span>Основные термины и определения ИБ</span></summary>
+      <div class="answer">
+        <ul>
+          <li><strong>Угроза</strong> — потенциальная возможность нарушения ИБ;</li>
+          <li><strong>Уязвимость</strong> — недостаток системы, через который может быть реализована угроза;</li>
+          <li><strong>Атака</strong> — действие по реализации угрозы через эксплуатацию уязвимости;</li>
+          <li><strong>Риск</strong> — вероятность реализации угрозы и величина ущерба;</li>
+          <li><strong>Нарушитель (злоумышленник)</strong> — субъект, реализующий угрозу;</li>
+          <li><strong>НСД</strong> — несанкционированный доступ;</li>
+          <li><strong>Идентификация</strong> — предъявление субъектом своего идентификатора;</li>
+          <li><strong>Аутентификация</strong> — проверка подлинности (пароль, ключ, биометрия);</li>
+          <li><strong>Авторизация</strong> — предоставление прав доступа;</li>
+          <li><strong>Политика безопасности</strong> — набор правил и требований по защите информации.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">4</span><span>Реализация информационной защиты</span></summary>
+      <div class="answer">
+        <p>ИБ реализуется <strong>комплексно</strong>, на нескольких уровнях мер:</p>
+        <ul>
+          <li><strong>Законодательный (правовой)</strong> — законы, ГОСТы, нормативы (ФЗ-149, ФЗ-152 о персональных данных, требования ФСТЭК/ФСБ);</li>
+          <li><strong>Административный (организационный)</strong> — политики, регламенты, инструкции, распределение ответственности;</li>
+          <li><strong>Физический</strong> — охрана, СКУД, видеонаблюдение, защита помещений;</li>
+          <li><strong>Технический (программно-аппаратный)</strong> — СЗИ: антивирусы, межсетевые экраны, шифрование, разграничение доступа.</li>
+        </ul>
+        <p><strong>Принципы:</strong> системность, эшелонированность (defense in depth), минимизация привилегий, непрерывность защиты, разумная достаточность.</p>
+        <p><strong>Этапы:</strong> анализ рисков → разработка политики → выбор и внедрение СЗИ → эксплуатация → аудит и совершенствование.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">5</span><span>Уязвимости и их классификация</span></summary>
+      <div class="answer">
+        <p><strong>Уязвимость</strong> — недостаток (слабость) в системе, который может быть использован для реализации угрозы.</p>
+        <p><strong>Классификация:</strong></p>
+        <ul>
+          <li><strong>По происхождению:</strong> проектные (ошибки архитектуры), реализационные (ошибки кода), конфигурационные (неверные настройки), эксплуатационные;</li>
+          <li><strong>По типу:</strong> программные, аппаратные, организационные, физические;</li>
+          <li><strong>По этапу ЖЦ:</strong> внесённые при проектировании, разработке, эксплуатации.</li>
+        </ul>
+        <p><strong>Примеры:</strong> переполнение буфера, SQL-инъекция, XSS, слабые пароли, открытые порты, устаревшее ПО.</p>
+        <p><strong>Стандарты учёта:</strong> <code>CVE</code> (база известных уязвимостей), <code>CVSS</code> (метрика опасности), <code>CWE</code> (классификация типов слабостей), БДУ ФСТЭК.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">6</span><span>Угрозы и их классификация</span></summary>
+      <div class="answer">
+        <p><strong>Угроза ИБ</strong> — потенциальная возможность нарушения конфиденциальности, целостности или доступности.</p>
+        <p><strong>Классификация:</strong></p>
+        <ul>
+          <li><strong>По природе:</strong> естественные (стихийные — пожар, наводнение) и искусственные;</li>
+          <li><strong>Искусственные:</strong> преднамеренные (атаки) и непреднамеренные (ошибки персонала);</li>
+          <li><strong>По источнику:</strong> внутренние (инсайдеры) и внешние;</li>
+          <li><strong>По нарушаемому свойству:</strong> угрозы конфиденциальности, целостности, доступности;</li>
+          <li><strong>По объекту воздействия:</strong> на информацию, на ПО, на оборудование, на персонал.</li>
+        </ul>
+        <p><strong>Примеры:</strong> НСД, вредоносное ПО, утечка данных, отказ оборудования, перехват трафика, ошибки конфигурации.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">7</span><span>Атаки, их разновидности и методы защиты от них</span></summary>
+      <div class="answer">
+        <p><strong>Атака</strong> — целенаправленная реализация угрозы путём эксплуатации уязвимости.</p>
+        <p><strong>Разновидности:</strong></p>
+        <ul>
+          <li><strong>Пассивные</strong> — перехват, прослушивание (sniffing), анализ трафика (не меняют данные);</li>
+          <li><strong>Активные</strong> — модификация, подмена, внедрение;</li>
+          <li><strong>DoS/DDoS</strong> — отказ в обслуживании;</li>
+          <li><strong>MITM</strong> — «человек посередине»;</li>
+          <li><strong>Инъекции</strong> — SQL-инъекция, XSS;</li>
+          <li><strong>Brute force</strong> — перебор паролей;</li>
+          <li><strong>Переполнение буфера</strong>;</li>
+          <li><strong>Социальная инженерия</strong>, фишинг;</li>
+          <li><strong>Вредоносное ПО</strong> — вирусы, трояны, шифровальщики.</li>
+        </ul>
+        <p><strong>Методы защиты:</strong> межсетевые экраны, IDS/IPS, шифрование, многофакторная аутентификация, своевременные обновления, антивирусы, валидация ввода, обучение персонала, резервное копирование.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">8</span><span>Механизмы подсистемы управления доступом</span></summary>
+      <div class="answer">
+        <p>Подсистема управления доступом обеспечивает разграничение доступа субъектов (пользователей, процессов) к объектам (файлам, данным). Три ступени:</p>
+        <ul>
+          <li><strong>Идентификация</strong> → <strong>Аутентификация</strong> → <strong>Авторизация</strong> (разграничение доступа).</li>
+        </ul>
+        <p><strong>Модели разграничения доступа:</strong></p>
+        <ul>
+          <li><strong>DAC (дискреционная)</strong> — владелец объекта сам назначает права (матрица доступа, ACL);</li>
+          <li><strong>MAC (мандатная)</strong> — доступ по меткам секретности и уровням допуска;</li>
+          <li><strong>RBAC (ролевая)</strong> — права назначаются ролям, роли — пользователям;</li>
+          <li><strong>ABAC (атрибутная)</strong> — на основе атрибутов субъекта, объекта и среды.</li>
+        </ul>
+        <p>Инструменты: матрица доступа, списки контроля доступа (ACL), метки безопасности. Принцип <strong>минимальных привилегий</strong>.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">9</span><span>Механизмы криптографической подсистемы</span></summary>
+      <div class="answer">
+        <p>Криптографическая подсистема обеспечивает конфиденциальность, целостность, аутентичность и неотказуемость:</p>
+        <ul>
+          <li><strong>Симметричное шифрование</strong> (один ключ) — AES, DES, ГОСТ 28147/«Магма», «Кузнечик». Быстрое, для больших объёмов;</li>
+          <li><strong>Асимметричное шифрование</strong> (пара ключей: открытый/закрытый) — RSA, ECC, ГОСТ Р 34.10. Для обмена ключами и ЭЦП;</li>
+          <li><strong>Хеш-функции</strong> — SHA-2/3, ГОСТ «Стрибог». Контроль целостности;</li>
+          <li><strong>ЭЦП (электронная подпись)</strong> — аутентичность, целостность, неотказуемость;</li>
+          <li><strong>Имитовставки (MAC/HMAC)</strong> — контроль целостности с ключом.</li>
+        </ul>
+        <p><strong>Управление ключами</strong> (генерация, распределение, хранение, отзыв) и <strong>PKI</strong> (инфраструктура открытых ключей, сертификаты, удостоверяющие центры). Применение: TLS/SSL, VPN, шифрование дисков.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">10</span><span>Механизмы подсистемы регистрации и учёта событий</span></summary>
+      <div class="answer">
+        <p>Подсистема регистрации и учёта (<strong>аудит, логирование</strong>) фиксирует события, значимые для безопасности, обеспечивая <strong>подотчётность (accountability)</strong>.</p>
+        <p><strong>Регистрируемые события:</strong> вход/выход пользователей, попытки доступа (успешные и нет), доступ к защищаемым объектам, изменение прав и настроек, действия администраторов, запуск программ.</p>
+        <p><strong>Механизмы:</strong></p>
+        <ul>
+          <li>Ведение журналов (логов) с метками времени и идентификаторами субъектов;</li>
+          <li><strong>Защита журналов</strong> от изменения и удаления;</li>
+          <li>Анализ и корреляция событий — системы <strong>SIEM</strong>;</li>
+          <li>Оповещение об инцидентах, хранение логов.</li>
+        </ul>
+        <p><strong>Цели:</strong> обнаружение инцидентов, расследование, контроль действий пользователей.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">11</span><span>Механизмы подсистемы обеспечения целостности</span></summary>
+      <div class="answer">
+        <p>Подсистема целостности защищает данные и ПО от несанкционированного и случайного изменения.</p>
+        <p><strong>Механизмы:</strong></p>
+        <ul>
+          <li><strong>Контрольные суммы и хеш-функции</strong> — фиксируют эталонное состояние;</li>
+          <li><strong>Имитовставки (HMAC)</strong> и <strong>ЭЦП</strong> — целостность с подтверждением источника;</li>
+          <li><strong>Контроль целостности</strong> программ и данных — при загрузке (доверенная загрузка) и периодический;</li>
+          <li><strong>Транзакционная целостность</strong> в СУБД (ACID, ограничения);</li>
+          <li><strong>Резервное копирование</strong> и журналирование изменений для восстановления.</li>
+        </ul>
+        <p>Контроль целостности — основа доверенной программной среды и защиты от подмены модулей.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">12</span><span>Определение и классификация сканеров уязвимостей</span></summary>
+      <div class="answer">
+        <p><strong>Сканер уязвимостей</strong> — программное средство для автоматического выявления уязвимостей в узлах, сети и приложениях путём сопоставления с базой известных уязвимостей.</p>
+        <p><strong>Классификация:</strong></p>
+        <ul>
+          <li><strong>По расположению:</strong> сетевые (network-based) и хостовые (host-based, с агентом);</li>
+          <li><strong>По объекту:</strong> сканеры ОС, сетевые, веб-приложений, СУБД;</li>
+          <li><strong>По методу:</strong> активные (отправляют тестовые запросы) и пассивные (анализ трафика);</li>
+          <li><strong>С агентом / безагентные.</strong></li>
+        </ul>
+        <p><strong>Примеры:</strong> Nessus, OpenVAS, Qualys, Nmap, MaxPatrol, XSpider, Acunetix (веб).</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">13</span><span>Структура сканера уязвимостей</span></summary>
+      <div class="answer">
+        <p>Типовые компоненты сканера:</p>
+        <ul>
+          <li><strong>Модуль сканирования (сбора данных)</strong> — обнаружение хостов, портов, сервисов, ОС (инвентаризация);</li>
+          <li><strong>База данных уязвимостей</strong> — сигнатуры, описания, проверки (регулярно обновляется);</li>
+          <li><strong>Модуль анализа (сопоставления)</strong> — сравнивает обнаруженное с базой, определяет уязвимости;</li>
+          <li><strong>Модуль генерации отчётов</strong> — результаты, уровни критичности (CVSS), рекомендации;</li>
+          <li><strong>Модуль управления и планировщик</strong> — настройка задач, расписание, профили;</li>
+          <li><strong>Модуль обновления</strong> базы уязвимостей.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">14</span><span>Сценарии применения сканеров уязвимостей</span></summary>
+      <div class="answer">
+        <ul>
+          <li><strong>Инвентаризация активов</strong> — что есть в сети, какие сервисы и версии;</li>
+          <li><strong>Аудит безопасности</strong> — регулярная оценка защищённости;</li>
+          <li><strong>Контроль соответствия (compliance)</strong> требованиям и стандартам;</li>
+          <li><strong>Проверка после изменений</strong> — после установки ПО, обновлений, изменения конфигурации;</li>
+          <li><strong>Контроль установки обновлений</strong> (патч-менеджмент);</li>
+          <li><strong>Подготовка к тестированию на проникновение</strong> (пентесту);</li>
+          <li><strong>Внешнее и внутреннее сканирование</strong> периметра и внутренней сети.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">15</span><span>Операционные системы семейства Windows и их подсистемы безопасности</span></summary>
+      <div class="answer">
+        <p>Модель безопасности Windows основана на <strong>SID</strong> (идентификаторах безопасности), <strong>токенах доступа</strong>, <strong>дескрипторах безопасности</strong> и <strong>ACL</strong>.</p>
+        <p><strong>Подсистемы безопасности:</strong></p>
+        <ul>
+          <li><strong>Управление доступом</strong> — монитор безопасности SRM, проверка прав по DACL;</li>
+          <li><strong>Аутентификация</strong> — LSA, база SAM, в домене — Active Directory, протоколы Kerberos/NTLM;</li>
+          <li><strong>Аудит</strong> — журналы событий безопасности;</li>
+          <li><strong>Шифрование</strong> — EFS (файлы), BitLocker (диски);</li>
+          <li><strong>Брандмауэр Windows</strong>, <strong>UAC</strong> (контроль учётных записей), <strong>групповые политики (GPO)</strong>;</li>
+          <li><strong>Windows Defender</strong> — антивирусная защита.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">16</span><span>Компоненты системы безопасности Windows</span></summary>
+      <div class="answer">
+        <ul>
+          <li><strong>LSA (Local Security Authority)</strong> — локальный центр безопасности, политики, аутентификация;</li>
+          <li><strong>SAM (Security Account Manager)</strong> — база локальных учётных записей и хешей паролей;</li>
+          <li><strong>SRM (Security Reference Monitor)</strong> — проверяет права доступа в ядре;</li>
+          <li><strong>Winlogon / GINA / Credential Provider</strong> — вход в систему;</li>
+          <li><strong>SID</strong> — уникальный идентификатор субъекта;</li>
+          <li><strong>Токен доступа (Access Token)</strong> — права и группы субъекта;</li>
+          <li><strong>Дескриптор безопасности</strong> — владелец + <strong>DACL</strong> (права) + <strong>SACL</strong> (аудит);</li>
+          <li><strong>Active Directory</strong>, <strong>Kerberos/NTLM</strong>, <strong>групповые политики</strong>.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">17</span><span>Построение системы управления обновлениями</span></summary>
+      <div class="answer">
+        <p><strong>Управление обновлениями (patch management)</strong> — процесс своевременного закрытия уязвимостей через установку обновлений ПО и ОС.</p>
+        <p><strong>Этапы:</strong></p>
+        <ul>
+          <li><strong>Инвентаризация</strong> ПО и версий;</li>
+          <li><strong>Получение</strong> обновлений из доверенных источников;</li>
+          <li><strong>Тестирование</strong> на стенде (чтобы не нарушить работу систем);</li>
+          <li><strong>Поэтапное развёртывание</strong>;</li>
+          <li><strong>Контроль установки</strong> и мониторинг.</li>
+        </ul>
+        <p><strong>Инструменты:</strong> <code>WSUS</code> (Windows Server Update Services) — централизованное управление обновлениями Windows; <code>SCCM/MECM</code>; сторонние системы. Цель — поддержание актуальности и снижение окна уязвимости.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">18</span><span>Реализация подсистемы антивирусной защиты сторонними средствами</span></summary>
+      <div class="answer">
+        <p>Помимо встроенного Windows Defender применяются антивирусы сторонних вендоров (Kaspersky, Dr.Web, ESET и др.) — обычно с централизованным управлением.</p>
+        <p><strong>Компоненты:</strong></p>
+        <ul>
+          <li><strong>Файловый монитор (резидентный)</strong> — проверка в реальном времени;</li>
+          <li><strong>Сканер по требованию / по расписанию</strong>;</li>
+          <li><strong>Веб- и почтовый антивирус</strong>;</li>
+          <li><strong>Эвристический и поведенческий анализ</strong> — обнаружение неизвестных угроз;</li>
+          <li><strong>Сетевой экран и контроль приложений</strong>;</li>
+          <li><strong>Центр управления (консоль)</strong> — единые политики, отчёты, обновление баз на всех узлах.</li>
+        </ul>
+        <p>Принцип — <strong>многоуровневая защита</strong> и регулярное обновление антивирусных баз.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">19</span><span>Создание новых пользователей в системе Linux</span></summary>
+      <div class="answer">
+        <p>Создание учётных записей выполняется командами (от root / sudo):</p>
+        <ul>
+          <li><code>useradd</code> (низкоуровневая) или <code>adduser</code> (интерактивная) — создание пользователя;</li>
+          <li><code>passwd имя</code> — задание пароля;</li>
+          <li>Ключи: <code>-m</code> (создать домашний каталог), <code>-s /bin/bash</code> (оболочка), <code>-G</code> (группы), <code>-u</code> (UID);</li>
+          <li><code>usermod</code> — изменение, <code>userdel</code> — удаление.</li>
+        </ul>
+        <p><strong>Учётные данные хранятся в файлах:</strong></p>
+        <ul>
+          <li><code>/etc/passwd</code> — список пользователей (имя, UID, GID, домашний каталог, оболочка);</li>
+          <li><code>/etc/shadow</code> — хеши паролей и параметры устаревания;</li>
+          <li><code>/etc/group</code> — группы.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">20</span><span>Настройка подсистемы идентификации и аутентификации Linux</span></summary>
+      <div class="answer">
+        <p>Основа аутентификации в Linux — <strong>PAM (Pluggable Authentication Modules)</strong> — модульная система, позволяющая гибко настраивать способы проверки подлинности.</p>
+        <ul>
+          <li>Конфигурация — в <code>/etc/pam.d/</code>;</li>
+          <li><strong>Политика паролей:</strong> сложность (<code>pam_pwquality</code>), сроки действия и устаревание (<code>/etc/login.defs</code>, поля в <code>/etc/shadow</code>);</li>
+          <li><strong>Блокировка</strong> после неудачных попыток (<code>pam_faillock</code>);</li>
+          <li><strong>Хранение паролей</strong> — только хеши (с солью) в <code>/etc/shadow</code>;</li>
+          <li><strong>Усиленная аутентификация:</strong> SSH-ключи, многофакторная (2FA), интеграция с LDAP/Kerberos.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">21</span><span>Настройка подсистемы разграничения доступа к файлам Linux</span></summary>
+      <div class="answer">
+        <p>Базовая модель — права <strong>rwx</strong> (чтение/запись/выполнение) для трёх категорий: <strong>владелец (u), группа (g), остальные (o)</strong>.</p>
+        <ul>
+          <li><code>chmod</code> — изменение прав (символьно <code>chmod u+x</code> или числом <code>chmod 755</code>);</li>
+          <li><code>chown</code> / <code>chgrp</code> — смена владельца и группы;</li>
+          <li><strong>Специальные биты:</strong> SUID (запуск от владельца), SGID (от группы), Sticky bit (защита удаления в общих каталогах, напр. /tmp);</li>
+          <li><strong>umask</strong> — маска прав по умолчанию для новых файлов;</li>
+          <li><strong>ACL</strong> (расширенные права) — <code>setfacl</code> / <code>getfacl</code> для гибкого назначения прав конкретным пользователям;</li>
+          <li><strong>Атрибуты</strong> — <code>chattr</code> (напр., +i — неизменяемость файла).</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">22</span><span>Настройка подсистемы регистрации и учёта событий Linux</span></summary>
+      <div class="answer">
+        <p>Журналирование в Linux обеспечивают:</p>
+        <ul>
+          <li><strong>syslog / rsyslog / syslog-ng</strong> — системные журналы;</li>
+          <li><strong>journald (systemd)</strong> — бинарный журнал (<code>journalctl</code>);</li>
+          <li>Логи в каталоге <code>/var/log</code>: <code>auth.log</code>/<code>secure</code> (аутентификация), <code>messages</code>, <code>syslog</code>;</li>
+          <li><strong>auditd</strong> — подсистема аудита: правила (<code>auditctl</code>, <code>/etc/audit/audit.rules</code>) фиксируют доступ к файлам, вызовы, действия;</li>
+          <li><strong>logrotate</strong> — ротация и архивирование журналов;</li>
+          <li><strong>Централизованный сбор</strong> — пересылка логов на сервер (remote syslog) и в SIEM.</li>
+        </ul>
+        <p>Важно защитить журналы от изменения и обеспечить их хранение.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">23</span><span>Надстройки безопасности ОС семейства Linux</span></summary>
+      <div class="answer">
+        <p>Дополнительные средства усиления (hardening) поверх базовой модели:</p>
+        <ul>
+          <li><strong>SELinux</strong> — мандатный контроль доступа (MAC) на основе контекстов и политик безопасности;</li>
+          <li><strong>AppArmor</strong> — ограничение приложений профилями (привязка к путям);</li>
+          <li><strong>Межсетевые экраны</strong> — <code>iptables</code> / <code>nftables</code> / <code>firewalld</code>;</li>
+          <li><strong>fail2ban</strong> — блокировка при brute-force;</li>
+          <li><strong>grsecurity</strong>, ограничения ядра, доверенная загрузка;</li>
+          <li><strong>Сертифицированные защищённые ОС:</strong> Astra Linux (мандатное и ролевое разграничение, замкнутая среда), РЕД ОС — для гостайны и КИИ.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">24</span><span>Механизмы защиты информации в средствах разработки ПО (Jira, SVN)</span></summary>
+      <div class="answer">
+        <p>В инструментах разработки реализуются типовые механизмы ИБ:</p>
+        <ul>
+          <li><strong>Аутентификация</strong> пользователей (логин/пароль, токены, интеграция с LDAP/AD/SSO);</li>
+          <li><strong>Авторизация</strong> — ролевая модель (RBAC), разграничение доступа к проектам, репозиториям, задачам;</li>
+          <li><strong>Шифрование канала</strong> — HTTPS/SSL при передаче;</li>
+          <li><strong>Аудит и журналирование</strong> действий пользователей;</li>
+          <li><strong>Резервное копирование</strong> данных.</li>
+        </ul>
+        <p><strong>SVN:</strong> файл <code>authz</code> задаёт права на пути в репозитории; хуки (hooks) для контроля. <strong>Jira:</strong> схемы разрешений (permission schemes), уровни безопасности задач (security levels), ограничение видимости.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">25</span><span>Типы, форматы и размер данных в прикладном программном обеспечении</span></summary>
+      <div class="answer">
+        <p><strong>Типы данных:</strong> целочисленные (int), вещественные (float/double), символьные и строковые (char, string), логические (bool), дата/время, бинарные (BLOB).</p>
+        <p><strong>Форматы хранения и обмена:</strong> текстовые (CSV, XML, JSON, INI) и бинарные (собственные форматы, сериализация).</p>
+        <p><strong>Размер данных</strong> определяется типом (например, int — 4 байта) и влияет на диапазон значений.</p>
+        <p><strong>С точки зрения ИБ</strong> это критично:</p>
+        <ul>
+          <li>Несоответствие/непроверка размера → <strong>переполнение буфера</strong>;</li>
+          <li>Отсутствие валидации типа и формата ввода → <strong>инъекции</strong> (SQL, XSS);</li>
+          <li>Необходимы <strong>контроль границ, валидация и санитизация</strong> входных данных.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">26</span><span>Особенности реализации механизмов защиты в СУБД</span></summary>
+      <div class="answer">
+        <ul>
+          <li><strong>Аутентификация и авторизация</strong> на уровне СУБД (учётные записи, роли);</li>
+          <li><strong>Управление привилегиями</strong> — операторы <code>GRANT</code> / <code>REVOKE</code> на объекты;</li>
+          <li><strong>Тонкое разграничение:</strong> права на таблицы, столбцы, строки (row-level security), представления (views);</li>
+          <li><strong>Шифрование</strong> — данных в покое (TDE, шифрование столбцов) и соединений (TLS);</li>
+          <li><strong>Аудит</strong> запросов и действий пользователей;</li>
+          <li><strong>Защита от SQL-инъекций</strong> — параметризованные (подготовленные) запросы;</li>
+          <li><strong>Целостность</strong> — транзакции (ACID), ограничения (constraints), резервное копирование.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">27</span><span>Реализация средств защиты в системах контроля версий</span></summary>
+      <div class="answer">
+        <p>Системы контроля версий (VCS) — Git, SVN — защищают исходный код и историю изменений:</p>
+        <ul>
+          <li><strong>Аутентификация:</strong> по SSH-ключам, HTTPS, токенам доступа;</li>
+          <li><strong>Авторизация:</strong> права на репозитории, ветки, пути (SVN — <code>authz</code>; Git — на уровне GitLab/GitHub/Bitbucket);</li>
+          <li><strong>Шифрование передачи</strong> (SSH/HTTPS);</li>
+          <li><strong>Целостность:</strong> в Git каждый коммит идентифицируется хешем (SHA-1/SHA-256), что выявляет подмену; <strong>подписанные коммиты (GPG)</strong>;</li>
+          <li><strong>Журналирование</strong> — полная история (кто, что, когда), хуки;</li>
+          <li><strong>Защита веток</strong> (branch protection), обязательное ревью;</li>
+          <li><strong>Резервное копирование</strong> репозиториев.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">28</span><span>Средства защиты информации в системах багтрекинга и проектного управления разработкой ПО</span></summary>
+      <div class="answer">
+        <p>В системах багтрекинга и управления проектами (Jira, Redmine, YouTrack):</p>
+        <ul>
+          <li><strong>Ролевая модель и схемы разрешений</strong> — кто что может видеть и делать;</li>
+          <li><strong>Разграничение доступа</strong> к проектам и отдельным задачам;</li>
+          <li><strong>Уровни безопасности задач</strong> (issue security levels) — скрытие конфиденциальных задач;</li>
+          <li><strong>Аудит</strong> действий и истории изменений;</li>
+          <li><strong>Интеграция с корпоративной аутентификацией</strong> (LDAP/AD/SSO);</li>
+          <li><strong>Шифрование канала</strong> (HTTPS), резервное копирование;</li>
+          <li>Защита вложений и комментариев, содержащих чувствительные данные.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">29</span><span>Компоненты корпоративной сети, определяющие уровень безопасности</span></summary>
+      <div class="answer">
+        <ul>
+          <li><strong>Межсетевые экраны (firewall)</strong> — фильтрация трафика на периметре и между сегментами;</li>
+          <li><strong>IDS/IPS</strong> — обнаружение и предотвращение вторжений;</li>
+          <li><strong>VPN-шлюзы</strong> — защищённый удалённый доступ;</li>
+          <li><strong>Прокси-серверы</strong> и шлюзы безопасности (контроль доступа в интернет);</li>
+          <li><strong>DMZ (демилитаризованная зона)</strong> — для публичных сервисов;</li>
+          <li><strong>Сегментация сети</strong> (VLAN), ACL на маршрутизаторах/коммутаторах;</li>
+          <li><strong>Системы аутентификации</strong> (RADIUS, контроллеры домена/AD);</li>
+          <li><strong>Антивирусные шлюзы</strong>, <strong>SIEM</strong> (мониторинг и корреляция событий).</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">30</span><span>Межсетевое экранирование</span></summary>
+      <div class="answer">
+        <p><strong>Межсетевой экран (firewall, брандмауэр)</strong> — программное или аппаратное средство контроля и фильтрации сетевого трафика между сетями (сегментами) на основе заданных правил.</p>
+        <p><strong>Функции:</strong></p>
+        <ul>
+          <li>Фильтрация пакетов по адресам, портам, протоколам;</li>
+          <li>Разграничение сетевых сегментов (внутренняя сеть / DMZ / интернет);</li>
+          <li>Трансляция адресов (NAT);</li>
+          <li>Журналирование и оповещение.</li>
+        </ul>
+        <p>Базовый принцип политики — <strong>«запрещено всё, что явно не разрешено»</strong> (default deny). Размещается на периметре сети и на границах внутренних сегментов.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">31</span><span>Обзор и классификация межсетевых экранов</span></summary>
+      <div class="answer">
+        <p><strong>По уровню модели OSI / принципу работы:</strong></p>
+        <ul>
+          <li><strong>Пакетные фильтры</strong> (сетевой/транспортный уровень) — фильтрация по IP, портам, протоколам; быстрые, но без учёта состояния;</li>
+          <li><strong>Сеансовые (Stateful Inspection)</strong> — отслеживают состояние соединений, разрешают пакеты в рамках установленных сессий;</li>
+          <li><strong>Шлюзы прикладного уровня (Application proxy)</strong> — анализируют содержимое на уровне приложений;</li>
+          <li><strong>NGFW (Next-Generation Firewall)</strong> — глубокий анализ пакетов (DPI), встроенные IPS, контроль приложений, антивирус.</li>
+        </ul>
+        <p><strong>По исполнению:</strong> программные и аппаратные. <strong>По расположению:</strong> персональные (на узле) и сетевые. Комплексные решения — <strong>UTM</strong> (объединённое управление угрозами).</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">32</span><span>Построение системы обнаружения вторжений</span></summary>
+      <div class="answer">
+        <p><strong>IDS (Intrusion Detection System)</strong> — система обнаружения вторжений; <strong>IPS</strong> — система предотвращения (блокирует атаку).</p>
+        <p><strong>Типы по расположению:</strong></p>
+        <ul>
+          <li><strong>NIDS (сетевые)</strong> — анализируют сетевой трафик;</li>
+          <li><strong>HIDS (хостовые)</strong> — отслеживают события на конкретном узле.</li>
+        </ul>
+        <p><strong>Методы обнаружения:</strong></p>
+        <ul>
+          <li><strong>Сигнатурный</strong> — сравнение с базой шаблонов известных атак (точно, но не видит новые);</li>
+          <li><strong>Поведенческий (аномальный)</strong> — выявление отклонений от нормального поведения (видит новые атаки, но больше ложных срабатываний).</li>
+        </ul>
+        <p><strong>Компоненты:</strong> сенсоры, модуль анализа, база сигнатур, консоль управления. Сенсоры размещают в ключевых точках сети, интегрируют с SIEM. Примеры: <strong>Snort, Suricata</strong>.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="num">33</span><span>Проблема эксплуатации защищённых АС, администрирование безопасности информации</span></summary>
+      <div class="answer">
+        <p><strong>АС</strong> — автоматизированная система. После внедрения защиты возникает задача поддержания её эффективности на протяжении всей эксплуатации.</p>
+        <p><strong>Проблемы эксплуатации защищённых АС:</strong></p>
+        <ul>
+          <li>Поддержание защищённого состояния при изменениях и обновлениях;</li>
+          <li>Управление учётными записями и правами (актуализация);</li>
+          <li>Мониторинг, аудит и реагирование на инциденты;</li>
+          <li><strong>Человеческий фактор</strong> — ошибки и нарушения персонала;</li>
+          <li>Баланс между безопасностью и удобством/производительностью;</li>
+          <li>Старение средств защиты, появление новых угроз.</li>
+        </ul>
+        <p><strong>Администрирование безопасности</strong> — деятельность администратора ИБ: настройка и сопровождение СЗИ, управление политиками и доступом, контроль соответствия требованиям, анализ журналов, резервирование, обучение пользователей, расследование инцидентов.</p>
+      </div>
+    </details>
+
+  </div>
+  <div class="no-results" id="noResults">Ничего не найдено 🔍</div>
+</main>
+
+<script>
+  /* ES5-совместимый код — работает в любом браузере, включая мобильные и старые движки */
+  var search = document.getElementById('search');
+  var nodeList = document.querySelectorAll('details');
+  var items = [];
+  for (var i = 0; i < nodeList.length; i++) { items.push(nodeList[i]); }
+  var count = document.getElementById('count');
+  var noResults = document.getElementById('noResults');
+
+  for (var i = 0; i < items.length; i++) {
+    var parts = items[i].querySelectorAll('summary span:last-child, .answer');
+    for (var j = 0; j < parts.length; j++) {
+      parts[j].setAttribute('data-orig', parts[j].innerHTML);
+    }
+  }
+
+  function escapeReg(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+  function highlight(el, query) {
+    var orig = el.getAttribute('data-orig');
+    if (!query) { el.innerHTML = orig; return; }
+    var re = new RegExp('(?![^<]*>)(' + escapeReg(query) + ')', 'gi');
+    el.innerHTML = orig.replace(re, '<mark>$1</mark>');
+  }
+
+  function update() {
+    var q = search.value.replace(/^\s+|\s+$/g, '').toLowerCase();
+    var visible = 0;
+    for (var i = 0; i < items.length; i++) {
+      var d = items[i];
+      var text = (d.textContent || d.innerText || '').toLowerCase();
+      var match = !q || text.indexOf(q) !== -1;
+      d.style.display = match ? '' : 'none';
+      if (match) {
+        visible++;
+        var parts = d.querySelectorAll('summary span:last-child, .answer');
+        for (var j = 0; j < parts.length; j++) { highlight(parts[j], q); }
+        if (q) { d.open = true; }
+      }
+    }
+    noResults.style.display = visible ? 'none' : 'block';
+    count.textContent = q ? (visible + ' из ' + items.length) : (items.length + ' вопросов');
+  }
+
+  function setAll(open) {
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].style.display !== 'none') { items[i].open = open; }
+    }
+  }
+
+  if (search.addEventListener) {
+    search.addEventListener('input', update);
+    search.addEventListener('keyup', update);
+  } else if (search.attachEvent) {
+    search.attachEvent('onkeyup', update);
+  }
+  update();
+</script>
+</body>
+</html>
